@@ -8,6 +8,10 @@ const routes = [
   ["/about", /Software engineering with breadth/],
   ["/resume", /Software engineering experience/],
   ["/contact", /Interested in working together/],
+  ["/projects/rupturelab", /Building a repeatable API resilience workbench/],
+  ["/projects/nat", /Integrating simulation, monitoring and recovery/],
+  ["/projects/wheat-segmentation", /Comparing four segmentation paradigms/],
+  ["/projects/xrfm", /Evaluating xRFM against strong tabular baselines/],
 ] as const;
 
 for (const [route, heading] of routes) {
@@ -32,6 +36,7 @@ for (const [route, heading] of routes) {
     expect(hasOverflow).toBe(false);
 
     const accessibility = await new AxeBuilder({ page }).analyze();
+
     expect(accessibility.violations).toEqual([]);
   });
 }

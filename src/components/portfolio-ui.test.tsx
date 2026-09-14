@@ -78,32 +78,49 @@ describe("portfolio UI", () => {
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 
-  it("shows a repository link only for a public project", () => {
+  it("shows case-study and repository actions only when they are available", () => {
     const publicProject = projects.find(
       (project) => project.slug === "rupturelab",
     );
-
-    const privateProject = projects.find(
+    const privateCaseStudy = projects.find(
+      (project) => project.slug === "wheat-segmentation",
+    );
+    const selectedPrivateProject = projects.find(
       (project) => project.slug === "bittrickle",
     );
 
     expect(publicProject).toBeDefined();
-    expect(privateProject).toBeDefined();
+    expect(privateCaseStudy).toBeDefined();
+    expect(selectedPrivateProject).toBeDefined();
 
     const { rerender } = render(<ProjectCard project={publicProject!} />);
 
     expect(
-      screen.getByRole("link", {
-        name: /View public repository/,
-      }),
-    ).toHaveAttribute("href", "https://github.com/dkumar315/rupture-lab");
-
-    rerender(<ProjectCard project={privateProject!} />);
+      screen.getByRole("link", { name: /Read case study/ }),
+    ).toHaveAttribute("href", "/projects/rupturelab");
 
     expect(
-      screen.queryByRole("link", {
-        name: /View public repository/,
-      }),
+      screen.getByRole("link", { name: /View public repository/ }),
+    ).toHaveAttribute("href", "https://github.com/dkumar315/rupture-lab");
+
+    rerender(<ProjectCard project={privateCaseStudy!} />);
+
+    expect(
+      screen.getByRole("link", { name: /Read case study/ }),
+    ).toHaveAttribute("href", "/projects/wheat-segmentation");
+
+    expect(
+      screen.queryByRole("link", { name: /View public repository/ }),
+    ).not.toBeInTheDocument();
+
+    rerender(<ProjectCard project={selectedPrivateProject!} />);
+
+    expect(
+      screen.queryByRole("link", { name: /Read case study/ }),
+    ).not.toBeInTheDocument();
+
+    expect(
+      screen.queryByRole("link", { name: /View public repository/ }),
     ).not.toBeInTheDocument();
   });
 
@@ -129,6 +146,10 @@ describe("portfolio UI", () => {
         name: "RuptureLab experiment overview dashboard",
       }),
     ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("link", { name: /Read case study/ }),
+    ).toHaveAttribute("href", "/projects/rupturelab");
 
     expect(
       screen.getByRole("link", { name: /View repository/ }),

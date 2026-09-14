@@ -169,15 +169,26 @@ export function ProjectCard({ project }: { project: Project }) {
           {project.team}
         </p>
 
-        {project.repoUrl ? (
-          <a
-            href={project.repoUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-4 inline-flex text-sm font-semibold underline decoration-[var(--border)] underline-offset-4 transition hover:decoration-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-          >
-            View public repository ↗
-          </a>
+        {project.caseStudyHref ? (
+          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+            <Link
+              href={project.caseStudyHref}
+              className="text-sm font-semibold underline decoration-[var(--border)] underline-offset-4 transition hover:decoration-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+            >
+              Read case study →
+            </Link>
+
+            {project.repoUrl ? (
+              <a
+                href={project.repoUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm font-semibold underline decoration-[var(--border)] underline-offset-4 transition hover:decoration-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+              >
+                View public repository ↗
+              </a>
+            ) : null}
+          </div>
         ) : null}
       </div>
     </article>
@@ -233,12 +244,22 @@ export function RuptureLabFeature({
             ))}
           </div>
 
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href={project.caseStudyHref!}
+              className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--foreground)] px-5 py-2.5 text-sm font-semibold text-[var(--background)] transition hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+            >
+              Read case study
+              <span aria-hidden="true" className="ml-2">
+                →
+              </span>
+            </Link>
+
             <a
               href={project.repoUrl!}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--foreground)] px-5 py-2.5 text-sm font-semibold text-[var(--background)] transition hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2.5 text-sm font-semibold transition hover:border-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
             >
               View repository
               <span aria-hidden="true" className="ml-2">
