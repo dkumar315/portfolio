@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import {
   credentials,
   education,
@@ -9,6 +10,13 @@ import {
   SectionHeading,
   SkillGroupCard,
 } from "@/components/portfolio-ui";
+
+export const metadata = createPageMetadata({
+  title: "About",
+  description:
+    "About Devaansh Kumar: UNSW Computer Science graduate focused on reliable backend systems and polished full-stack software.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (

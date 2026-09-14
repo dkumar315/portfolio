@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import {
   CaseStudyDecisionGrid,
   CaseStudyFlow,
@@ -9,6 +10,13 @@ import {
 } from "@/components/case-study-ui";
 import { projects, routes } from "@/content/portfolio";
 import type { Project } from "@/content/types";
+
+export const metadata = createPageMetadata({
+  title: "xRFM Benchmarking Case Study",
+  description:
+    "Case study benchmarking xRFM against Random Forest and XGBoost across classification, regression, scaling and feature-importance experiments.",
+  path: "/projects/xrfm",
+});
 
 const project = projects.find(
   (candidate) => candidate.slug === "xrfm",

@@ -1,9 +1,17 @@
+import { createPageMetadata } from "@/lib/metadata";
 import { experiences, profile } from "@/content/portfolio";
 import {
   ExperienceCard,
   PageIntro,
   SectionHeading,
 } from "@/components/portfolio-ui";
+
+export const metadata = createPageMetadata({
+  title: "Experience",
+  description:
+    "Software engineering experience across product development, network-resilience simulation, backend systems and full-stack delivery.",
+  path: "/experience",
+});
 
 const engineeringExperience = experiences.filter(
   (experience) => experience.category === "engineering",

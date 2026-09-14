@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import {
   CaseStudyDecisionGrid,
   CaseStudyFlow,
@@ -9,6 +10,13 @@ import {
 } from "@/components/case-study-ui";
 import { projects, routes } from "@/content/portfolio";
 import type { Project } from "@/content/types";
+
+export const metadata = createPageMetadata({
+  title: "Wheat Crop Segmentation Case Study",
+  description:
+    "Case study comparing classical, clustering, graph-based and deep-learning approaches to wheat crop semantic segmentation.",
+  path: "/projects/wheat-segmentation",
+});
 
 const project = projects.find(
   (candidate) => candidate.slug === "wheat-segmentation",

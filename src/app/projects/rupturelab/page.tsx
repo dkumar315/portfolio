@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import Image from "next/image";
 
 import {
@@ -11,6 +12,13 @@ import {
 } from "@/components/case-study-ui";
 import { projects, routes } from "@/content/portfolio";
 import type { Project } from "@/content/types";
+
+export const metadata = createPageMetadata({
+  title: "RuptureLab Case Study",
+  description:
+    "Case study of RuptureLab, an independent full-stack API resilience workbench for controlled failure, recovery, monitoring and contract verification.",
+  path: "/projects/rupturelab",
+});
 
 const project = projects.find(
   (candidate) => candidate.slug === "rupturelab",

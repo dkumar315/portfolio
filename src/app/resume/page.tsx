@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import {
   education,
   experiences,
@@ -12,6 +13,13 @@ import {
   ProjectCard,
   SectionHeading,
 } from "@/components/portfolio-ui";
+
+export const metadata = createPageMetadata({
+  title: "Resume",
+  description:
+    "Web resume for Devaansh Kumar covering software engineering experience, selected technical projects and UNSW Computer Science education.",
+  path: "/resume",
+});
 
 const engineeringExperience = experiences.filter(
   (experience) => experience.category === "engineering",

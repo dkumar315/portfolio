@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import Image from "next/image";
 
 import { projects } from "@/content/portfolio";
@@ -8,6 +9,13 @@ import {
   RuptureLabFeature,
   SectionHeading,
 } from "@/components/portfolio-ui";
+
+export const metadata = createPageMetadata({
+  title: "Projects",
+  description:
+    "Selected software engineering projects across full-stack development, backend systems, machine learning, networking and reliability.",
+  path: "/projects",
+});
 
 const ruptureLab = projects.find(
   (project) => project.shortTitle === "RuptureLab",
