@@ -265,7 +265,7 @@ export function RuptureLabFeature({
 
 export function ExperienceCard({ experience }: { experience: Experience }) {
   return (
-    <article className="grid gap-6 border-b border-[var(--border)] py-8 first:pt-0 md:grid-cols-[12rem_1fr]">
+    <article className="grid gap-6 border-b border-[var(--border)] py-8 first:pt-0 last:border-b-0 md:grid-cols-[12rem_1fr]">
       <div>
         <p className="font-mono text-xs uppercase tracking-[0.12em] text-[var(--muted)]">
           {experience.period}

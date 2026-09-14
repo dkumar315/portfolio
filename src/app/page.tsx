@@ -64,7 +64,7 @@ export default function Home() {
           ].map(([label, value]) => (
             <div
               key={label}
-              className="border-b border-[var(--border)] py-6 sm:odd:border-r lg:border-b-0 lg:border-r lg:last:border-r-0"
+              className="flex min-h-28 flex-col justify-center border-b border-[var(--border)] px-5 py-5 sm:px-6 sm:odd:border-r lg:border-b-0 lg:border-r lg:px-7 lg:last:border-r-0"
             >
               <p className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--muted)]">
                 {label}
