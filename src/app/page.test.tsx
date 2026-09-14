@@ -1,57 +1,39 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import Home from "@/app/page";
-import { site } from "@/lib/site";
+import Home from "./page";
 
 describe("Home", () => {
-  it("introduces Devaansh and his engineering focus", () => {
+  it("introduces the engineering focus", () => {
     render(<Home />);
 
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /Backend-minded\. Full-stack capable\./i,
+        name: /Backend-minded\. Full-stack capable\./,
       }),
-    ).toBeInTheDocument();
+    ).toBeVisible();
 
-    expect(
-      screen.getByText(/UNSW Computer Science graduate/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText("RuptureLab v1.0.0")).toBeVisible();
   });
 
-  it("provides direct contact and GitHub actions", () => {
+  it("surfaces professional engineering experience", () => {
     render(<Home />);
 
-    expect(screen.getByRole("link", { name: "Get in touch" })).toHaveAttribute(
+    expect(screen.getByText("Arms Operations Analysis Pty Ltd")).toBeVisible();
+    expect(screen.getByText("Tandem Learning")).toBeVisible();
+  });
+
+  it("links to the main recruiter journeys", () => {
+    render(<Home />);
+
+    expect(screen.getByRole("link", { name: /View projects/ })).toHaveAttribute(
       "href",
-      `mailto:${site.email}`,
+      "/projects",
     );
-
-    expect(screen.getByRole("link", { name: "View GitHub" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /Contact me/ })).toHaveAttribute(
       "href",
-      site.github,
+      "/contact",
     );
-  });
-
-  it("shows the current engineering snapshot", () => {
-    render(<Home />);
-
-    expect(screen.getByText("ArmsOA + Tandem Learning")).toBeInTheDocument();
-    expect(screen.getByText("RuptureLab v1.0.0")).toBeInTheDocument();
-    expect(
-      screen.getByText("Python · FastAPI · TypeScript · React"),
-    ).toBeInTheDocument();
-  });
-
-  it("explains the purpose of the portfolio", () => {
-    render(<Home />);
-
-    expect(
-      screen.getByRole("heading", {
-        level: 2,
-        name: "Engineering evidence over decoration.",
-      }),
-    ).toBeInTheDocument();
   });
 });

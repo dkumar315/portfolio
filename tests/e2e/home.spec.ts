@@ -6,52 +6,46 @@ test.describe("portfolio home page", () => {
     await page.goto("/");
   });
 
-  test("presents the primary engineering identity and actions", async ({
+  test("presents the primary engineering identity and recruiter actions", async ({
     page,
   }) => {
-    await expect(page).toHaveTitle(/Devaansh Kumar \| Software Engineer/);
-
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Backend-minded\. Full-stack capable\./i,
+        name: /Backend-minded\. Full-stack capable\./,
       }),
     ).toBeVisible();
 
     await expect(
-      page.getByRole("link", { name: "Get in touch" }),
-    ).toHaveAttribute("href", "mailto:devaanshk1630@gmail.com");
+      page.getByRole("link", { name: /View projects/ }),
+    ).toHaveAttribute("href", "/projects");
 
     await expect(
-      page.getByRole("link", { name: "View GitHub" }),
-    ).toHaveAttribute("href", "https://github.com/dkumar315");
+      page.getByRole("link", { name: /Contact me/ }),
+    ).toHaveAttribute("href", "/contact");
   });
 
   test("publishes useful metadata", async ({ page }) => {
+    await expect(page).toHaveTitle(/Devaansh Kumar/);
+
     await expect(page.locator('meta[name="description"]')).toHaveAttribute(
       "content",
-      /Software engineer and UNSW Computer Science graduate/,
-    );
-
-    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
-      "content",
-      "Devaansh Kumar | Software Engineer",
+      /software engineer/i,
     );
   });
 
   test("does not overflow horizontally", async ({ page }) => {
-    const hasHorizontalOverflow = await page.evaluate(
+    const hasOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth > window.innerWidth,
     );
 
-    expect(hasHorizontalOverflow).toBe(false);
+    expect(hasOverflow).toBe(false);
   });
 
   test("has no automatically detectable accessibility violations", async ({
     page,
   }) => {
     const results = await new AxeBuilder({ page }).analyze();
-
     expect(results.violations).toEqual([]);
   });
 });

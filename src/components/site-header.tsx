@@ -1,42 +1,80 @@
 import Link from "next/link";
 
+import { primaryNavigation, routes } from "@/content/portfolio";
 import { site } from "@/lib/site";
-
-const externalLinks = [
-  { label: "GitHub", href: site.github },
-  { label: "LinkedIn", href: site.linkedin },
-] as const;
 
 export function SiteHeader() {
   return (
-    <header className="border-border/80 bg-background/90 sticky top-0 z-50 border-b backdrop-blur">
-      <div className="mx-auto flex h-18 max-w-6xl items-center justify-between gap-6 px-6 lg:px-8">
-        <Link
-          href="/"
-          className="focus-visible:ring-accent rounded-sm focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none"
-        >
-          <span className="block text-sm font-semibold tracking-tight">
-            {site.name}
-          </span>
-          <span className="text-muted block text-xs">{site.role}</span>
-        </Link>
+    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[color:var(--background)]/95 backdrop-blur">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-4 sm:px-8 lg:px-10 xl:flex-row xl:items-center xl:justify-between">
+        <div className="flex items-center justify-between gap-6">
+          <Link
+            href={routes.home}
+            className="group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+          >
+            <span className="block text-sm font-semibold tracking-[-0.02em]">
+              {site.name}
+            </span>
+            <span className="mt-0.5 block text-xs text-[var(--muted)]">
+              {site.role}
+            </span>
+          </Link>
 
-        <nav aria-label="External profiles">
-          <ul className="text-muted flex items-center gap-5 text-sm">
-            {externalLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-foreground focus-visible:ring-accent rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <div className="flex gap-4 text-xs font-medium xl:hidden">
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+            >
+              GitHub
+            </a>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+            >
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
+          <nav aria-label="Primary navigation">
+            <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+              {primaryNavigation.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="font-medium text-[var(--muted)] transition hover:text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="hidden gap-4 text-xs font-medium xl:flex">
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+            >
+              GitHub ↗
+            </a>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+            >
+              LinkedIn ↗
+            </a>
+          </div>
+        </div>
       </div>
     </header>
   );

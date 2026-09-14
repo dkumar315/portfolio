@@ -1,98 +1,148 @@
-import { site } from "@/lib/site";
+import Link from "next/link";
 
-const snapshot = [
-  {
-    label: "Professional engineering",
-    value: "ArmsOA + Tandem Learning",
-  },
-  {
-    label: "Independent engineering",
-    value: "RuptureLab v1.0.0",
-  },
-  {
-    label: "Core stack",
-    value: "Python · FastAPI · TypeScript · React",
-  },
-] as const;
+import {
+  experiences,
+  homepageExperienceSlugs,
+  homepageProjectSlugs,
+  profile,
+  projects,
+  routes,
+  skillGroups,
+} from "@/content/portfolio";
+import type { Experience, Project } from "@/content/types";
+import {
+  ExperienceCard,
+  PageIntro,
+  ProjectCard,
+  SectionHeading,
+  SkillGroupCard,
+} from "@/components/portfolio-ui";
+
+const homeProjects = homepageProjectSlugs.map(
+  (slug) => projects.find((project) => project.slug === slug) as Project,
+);
+
+const homeExperiences = homepageExperienceSlugs.map(
+  (slug) =>
+    experiences.find((experience) => experience.slug === slug) as Experience,
+);
 
 export default function Home() {
   return (
     <main id="main-content">
-      <section className="mx-auto max-w-6xl px-6 pt-24 pb-20 sm:pt-32 sm:pb-24 lg:px-8 lg:pt-40">
-        <div className="max-w-4xl">
-          <p className="text-accent font-mono text-xs font-semibold tracking-[0.22em] uppercase">
-            Software Engineer · UNSW CS
-          </p>
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <PageIntro
+          eyebrow="Software Engineer · UNSW Computer Science"
+          title="Backend-minded. Full-stack capable. Focused on software that holds up."
+          description={profile.introduction}
+          actions={[
+            {
+              label: "View projects",
+              href: routes.projects,
+              primary: true,
+            },
+            {
+              label: "Contact me",
+              href: routes.contact,
+            },
+          ]}
+        />
 
-          <h1 className="mt-7 max-w-4xl text-4xl leading-[1.04] font-semibold tracking-[-0.04em] text-balance sm:text-6xl sm:leading-[1.02] lg:text-7xl">
-            Backend-minded. Full-stack capable. Focused on software that holds
-            up.
-          </h1>
-
-          <p className="text-muted mt-8 max-w-2xl text-base leading-7 sm:text-xl sm:leading-9">
-            I&apos;m Devaansh Kumar, a UNSW Computer Science graduate with
-            professional engineering experience across Python/FastAPI,
-            TypeScript/React, APIs, databases, testing, and production web
-            systems.
-          </p>
-
-          <div className="mt-10 flex flex-wrap gap-3">
-            <a
-              href={`mailto:${site.email}`}
-              className="bg-foreground text-background hover:bg-accent-strong focus-visible:ring-accent inline-flex min-h-11 items-center justify-center rounded-md px-5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none"
-            >
-              Get in touch
-            </a>
-
-            <a
-              href={site.github}
-              target="_blank"
-              rel="noreferrer"
-              className="border-border bg-surface hover:border-foreground/30 focus-visible:ring-accent inline-flex min-h-11 items-center justify-center rounded-md border px-5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none"
-            >
-              View GitHub
-            </a>
-          </div>
-        </div>
-
-        <dl
+        <section
           aria-label="Engineering snapshot"
-          className="border-border mt-20 grid border-y sm:grid-cols-3"
+          className="grid border-b border-[var(--border)] sm:grid-cols-2 lg:grid-cols-4"
         >
-          {snapshot.map((item) => (
+          {[
+            ["Professional engineering", "ArmsOA + Tandem Learning"],
+            ["Independent release", "RuptureLab v1.0.0"],
+            ["Industry capstone", "94 HD · COMP3900"],
+            ["Core stack", "Python · FastAPI · TypeScript · React"],
+          ].map(([label, value]) => (
             <div
-              key={item.label}
-              className="border-border py-6 sm:border-r sm:px-6 sm:first:pl-0 sm:last:border-r-0"
+              key={label}
+              className="border-b border-[var(--border)] py-6 sm:odd:border-r lg:border-b-0 lg:border-r lg:last:border-r-0"
             >
-              <dt className="text-muted font-mono text-[0.68rem] tracking-[0.16em] uppercase">
-                {item.label}
-              </dt>
-              <dd className="mt-2 text-sm font-medium sm:text-base">
-                {item.value}
-              </dd>
+              <p className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--muted)]">
+                {label}
+              </p>
+              <p className="mt-2 max-w-[15rem] text-sm font-semibold leading-6">
+                {value}
+              </p>
             </div>
           ))}
-        </dl>
-      </section>
+        </section>
 
-      <section className="border-border border-t">
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 py-16 sm:py-20 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
-          <p className="text-accent font-mono text-xs font-semibold tracking-[0.2em] uppercase">
-            What you&apos;ll find here
-          </p>
+        <section className="py-16 sm:py-20">
+          <SectionHeading
+            eyebrow="Experience"
+            title="Production work, not just coursework."
+            description="Professional software engineering experience across a small product team, an industry-client system, and paid follow-on engineering."
+            href={routes.experience}
+            linkLabel="Full experience"
+          />
 
-          <div className="max-w-2xl">
-            <h2 className="text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">
-              Engineering evidence over decoration.
-            </h2>
-            <p className="text-muted mt-5 text-base leading-7 sm:text-lg sm:leading-8">
-              Case studies focus on what I built, the decisions behind it, and
-              how I validated it—from independently owned work such as
-              RuptureLab to professional and university engineering projects.
-            </p>
+          <div>
+            {homeExperiences.map((experience) => (
+              <ExperienceCard key={experience.slug} experience={experience} />
+            ))}
           </div>
-        </div>
-      </section>
+        </section>
+
+        <section className="pb-16 sm:pb-20">
+          <SectionHeading
+            eyebrow="Selected work"
+            title="Engineering evidence over decoration."
+            description="A released independent product, industry work, machine learning, networking, systems and frontend engineering."
+            href={routes.projects}
+            linkLabel="All projects"
+          />
+
+          <div className="grid gap-5 md:grid-cols-2">
+            {homeProjects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </div>
+        </section>
+
+        <section className="border-t border-[var(--border)] py-16 sm:py-20">
+          <SectionHeading
+            eyebrow="Technical range"
+            title="Skills tied to work I can explain."
+            description="The portfolio prioritises evidence-backed engineering capability instead of a keyword wall."
+          />
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {skillGroups.map((group) => (
+              <SkillGroupCard key={group.title} group={group} />
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-16 rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-7 sm:mb-20 sm:p-10">
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-strong)]">
+            Next conversation
+          </p>
+          <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div>
+              <h2 className="max-w-3xl text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
+                Looking for a graduate or junior engineer who can move across
+                backend and full-stack work?
+              </h2>
+              <p className="mt-4 max-w-2xl leading-7 text-[var(--muted)]">
+                I am interested in software engineering roles where strong
+                implementation, testing and product judgement matter.
+              </p>
+            </div>
+
+            <Link
+              href={routes.contact}
+              className="inline-flex min-h-11 w-fit items-center justify-center rounded-full bg-[var(--foreground)] px-5 py-2.5 text-sm font-semibold text-[var(--background)] transition hover:opacity-85"
+            >
+              Get in touch →
+            </Link>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
