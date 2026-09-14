@@ -1,18 +1,31 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { SiteFooter } from "@/components/site-footer";
-import { site } from "@/lib/site";
+import { SiteFooter } from "./site-footer";
 
 describe("SiteFooter", () => {
-  it("shows the portfolio owner and contact address", () => {
+  it("keeps footer navigation concise", () => {
     render(<SiteFooter />);
 
-    expect(screen.getByText(`© 2026 ${site.name}`)).toBeInTheDocument();
+    expect(screen.getByText("Devaansh Kumar")).toBeVisible();
 
-    expect(screen.getByRole("link", { name: site.email })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Projects" })).toHaveAttribute(
       "href",
-      `mailto:${site.email}`,
+      "/projects",
     );
+
+    expect(screen.getByRole("link", { name: "Experience" })).toHaveAttribute(
+      "href",
+      "/experience",
+    );
+
+    expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute(
+      "href",
+      "/contact",
+    );
+
+    expect(
+      screen.queryByText("devaanshk1630@gmail.com"),
+    ).not.toBeInTheDocument();
   });
 });

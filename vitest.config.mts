@@ -17,7 +17,7 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "html"],
       include: [
-        "src/app/page.tsx",
+        "src/app/**/page.tsx",
         "src/components/**/*.{ts,tsx}",
         "src/lib/**/*.{ts,tsx}",
       ],
