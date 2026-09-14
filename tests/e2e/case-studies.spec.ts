@@ -48,3 +48,37 @@ test("RuptureLab case study serves all released screenshots", async ({
     expect((await response.body()).length).toBeGreaterThan(0);
   }
 });
+
+test("RuptureLab released screenshots decode in the rendered page", async ({
+  page,
+}) => {
+  await page.goto("/projects/rupturelab");
+
+  const images = [
+    page.getByRole("img", {
+      name: "RuptureLab overview showing recent experiments and system status",
+    }),
+    page.getByRole("img", {
+      name: "RuptureLab live experiment showing baseline fault and recovery phases",
+    }),
+    page.getByRole("img", {
+      name: "RuptureLab persisted experiment result and contract evaluation",
+    }),
+  ];
+
+  for (const image of images) {
+    await image.scrollIntoViewIfNeeded();
+    await expect(image).toBeVisible();
+
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (element) =>
+            element instanceof HTMLImageElement &&
+            element.complete &&
+            element.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
+});

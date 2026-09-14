@@ -149,18 +149,29 @@ export default function RuptureLabCaseStudyPage() {
           />
         </CaseStudySection>
 
-        <CaseStudySection
-          eyebrow="Product evidence"
-          title="The interface exposes the same model the backend enforces."
-        >
-          <div className="space-y-5">
-            <figure className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--foreground)] p-3">
+        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
+          <div className="max-w-3xl">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-strong)]">
+              Product evidence
+            </p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
+              The interface exposes the same model the backend enforces.
+            </h2>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted)]">
+              The released UI carries the experiment model from overview to live
+              execution and persisted result, so the visual state matches the
+              baseline, fault, recovery and contract concepts in the backend.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+            <figure className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--foreground)] p-3 lg:col-span-2">
               <Image
                 src="/projects/rupturelab/overview.png"
                 alt="RuptureLab overview showing recent experiments and system status"
                 width={1600}
                 height={1000}
-                sizes="(max-width: 1280px) 100vw, 900px"
+                sizes="(max-width: 1280px) 100vw, 1200px"
                 className="h-auto w-full rounded-2xl"
               />
             </figure>
@@ -171,7 +182,7 @@ export default function RuptureLabCaseStudyPage() {
                 alt="RuptureLab live experiment showing baseline fault and recovery phases"
                 width={1600}
                 height={1000}
-                sizes="(max-width: 1280px) 100vw, 900px"
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="h-auto w-full rounded-2xl"
               />
             </figure>
@@ -182,12 +193,12 @@ export default function RuptureLabCaseStudyPage() {
                 alt="RuptureLab persisted experiment result and contract evaluation"
                 width={1600}
                 height={1000}
-                sizes="(max-width: 1280px) 100vw, 900px"
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="h-auto w-full rounded-2xl"
               />
             </figure>
           </div>
-        </CaseStudySection>
+        </section>
 
         <CaseStudySection
           eyebrow="Quality"
