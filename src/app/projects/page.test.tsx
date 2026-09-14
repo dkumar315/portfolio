@@ -42,5 +42,9 @@ describe("ProjectsPage", () => {
         name: "Systems, networking and application engineering",
       }),
     ).toBeVisible();
+
+    expect(
+      screen.getAllByRole("link", { name: /Read case study/ }),
+    ).toHaveLength(4);
   });
 });
