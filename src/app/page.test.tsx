@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import Home from "./page";
 
 describe("Home", () => {
-  it("introduces the engineering focus", () => {
+  it("introduces the engineering focus and flagship", () => {
     render(<Home />);
 
     expect(
@@ -14,14 +14,25 @@ describe("Home", () => {
       }),
     ).toBeVisible();
 
-    expect(screen.getByText("RuptureLab v1.0.0")).toBeVisible();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "RuptureLab" }),
+    ).toBeVisible();
+
+    expect(
+      screen.getByRole("img", {
+        name: "RuptureLab experiment overview dashboard",
+      }),
+    ).toBeInTheDocument();
   });
 
-  it("surfaces professional engineering experience", () => {
+  it("surfaces only professional engineering experience on the homepage", () => {
     render(<Home />);
 
     expect(screen.getByText("Arms Operations Analysis Pty Ltd")).toBeVisible();
+
     expect(screen.getByText("Tandem Learning")).toBeVisible();
+
+    expect(screen.queryByText("Academic Tutor")).not.toBeInTheDocument();
   });
 
   it("links to the main recruiter journeys", () => {
@@ -31,6 +42,7 @@ describe("Home", () => {
       "href",
       "/projects",
     );
+
     expect(screen.getByRole("link", { name: /Contact me/ })).toHaveAttribute(
       "href",
       "/contact",

@@ -2,29 +2,33 @@ import Link from "next/link";
 
 import {
   experiences,
-  homepageExperienceSlugs,
-  homepageProjectSlugs,
   profile,
   projects,
   routes,
   skillGroups,
 } from "@/content/portfolio";
-import type { Experience, Project } from "@/content/types";
+import type { Project } from "@/content/types";
 import {
   ExperienceCard,
   PageIntro,
   ProjectCard,
+  RuptureLabFeature,
   SectionHeading,
   SkillGroupCard,
 } from "@/components/portfolio-ui";
 
-const homeProjects = homepageProjectSlugs.map(
-  (slug) => projects.find((project) => project.slug === slug) as Project,
+const homeExperiences = experiences.filter(
+  (experience) => experience.category === "engineering",
 );
 
-const homeExperiences = homepageExperienceSlugs.map(
-  (slug) =>
-    experiences.find((experience) => experience.slug === slug) as Experience,
+const ruptureLab = projects.find(
+  (project) => project.shortTitle === "RuptureLab",
+) as Project;
+
+const supportingProjects = projects.filter((project) =>
+  ["Network Analytic Tool", "Wheat Crop Segmentation", "BitTrickle"].includes(
+    project.shortTitle,
+  ),
 );
 
 export default function Home() {
@@ -72,11 +76,11 @@ export default function Home() {
           ))}
         </section>
 
-        <section className="py-16 sm:py-20">
+        <section className="py-14 sm:py-16 lg:py-20">
           <SectionHeading
-            eyebrow="Experience"
-            title="Production work, not just coursework."
-            description="Professional software engineering experience across a small product team, an industry-client system, and paid follow-on engineering."
+            eyebrow="Professional engineering"
+            title="Production software experience"
+            description="Software engineering work across an industry-client demonstrator and a live education product."
             href={routes.experience}
             linkLabel="Full experience"
           />
@@ -88,27 +92,41 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="pb-16 sm:pb-20">
+        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading
-            eyebrow="Selected work"
-            title="Engineering evidence over decoration."
-            description="A released independent product, industry work, machine learning, networking, systems and frontend engineering."
+            eyebrow="Flagship project"
+            title="RuptureLab"
+            description="An independently owned, released full-stack resilience workbench with backend, data, real-time monitoring and production-style quality concerns."
             href={routes.projects}
             linkLabel="All projects"
           />
 
-          <div className="grid gap-5 md:grid-cols-2">
-            {homeProjects.map((project) => (
+          <RuptureLabFeature
+            project={ruptureLab}
+            imageSrc="/projects/rupturelab/overview.png"
+            imageAlt="RuptureLab experiment overview dashboard"
+          />
+        </section>
+
+        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
+          <SectionHeading
+            eyebrow="Selected work"
+            title="Technical work across systems, ML and networking"
+            description="A smaller selection of projects that complements the flagship with industry, machine-learning and systems experience."
+          />
+
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {supportingProjects.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
           </div>
         </section>
 
-        <section className="border-t border-[var(--border)] py-16 sm:py-20">
+        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Technical range"
-            title="Skills tied to work I can explain."
-            description="The portfolio prioritises evidence-backed engineering capability instead of a keyword wall."
+            title="Skills backed by real work"
+            description="Each group is tied to projects or professional engineering experience."
           />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -120,14 +138,16 @@ export default function Home() {
 
         <section className="mb-16 rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-7 sm:mb-20 sm:p-10">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-strong)]">
-            Next conversation
+            Get in touch
           </p>
+
           <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <h2 className="max-w-3xl text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
-                Looking for a graduate or junior engineer who can move across
-                backend and full-stack work?
+                Looking for a graduate or junior engineer across backend and
+                full-stack work?
               </h2>
+
               <p className="mt-4 max-w-2xl leading-7 text-[var(--muted)]">
                 I am interested in software engineering roles where strong
                 implementation, testing and product judgement matter.

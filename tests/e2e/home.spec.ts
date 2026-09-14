@@ -25,6 +25,37 @@ test.describe("portfolio home page", () => {
     ).toHaveAttribute("href", "/contact");
   });
 
+  test("shows released RuptureLab visual evidence", async ({ page }) => {
+    const image = page.getByRole("img", {
+      name: "RuptureLab experiment overview dashboard",
+    });
+
+    await expect(image).toBeVisible();
+
+    const assetResponse = await page.request.get(
+      "/projects/rupturelab/overview.png",
+    );
+
+    expect(assetResponse.ok()).toBe(true);
+    expect((await assetResponse.body()).length).toBeGreaterThan(0);
+  });
+
+  test("keeps primary navigation on one visual row", async ({ page }) => {
+    const navigation = page
+      .getByRole("navigation", {
+        name: "Primary navigation",
+      })
+      .last();
+
+    const tops = await navigation
+      .getByRole("link")
+      .evaluateAll((links) =>
+        links.map((link) => Math.round(link.getBoundingClientRect().top)),
+      );
+
+    expect(new Set(tops).size).toBe(1);
+  });
+
   test("publishes useful metadata", async ({ page }) => {
     await expect(page).toHaveTitle(/Devaansh Kumar/);
 
@@ -46,6 +77,7 @@ test.describe("portfolio home page", () => {
     page,
   }) => {
     const results = await new AxeBuilder({ page }).analyze();
+
     expect(results.violations).toEqual([]);
   });
 });

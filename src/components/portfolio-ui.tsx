@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import type { Experience, Project, SkillGroup } from "@/content/types";
@@ -29,7 +30,7 @@ export function PageIntro({
   actions = [],
 }: PageIntroProps) {
   return (
-    <section className="border-b border-[var(--border)] py-16 sm:py-20 lg:py-24">
+    <section className="border-b border-[var(--border)] py-14 sm:py-16 lg:py-20">
       <p className="mb-5 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-[var(--accent-strong)]">
         {eyebrow}
       </p>
@@ -96,9 +97,11 @@ export function SectionHeading({
         <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-strong)]">
           {eyebrow}
         </p>
+
         <h2 className="text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
           {title}
         </h2>
+
         {description ? (
           <p className="mt-3 max-w-2xl leading-7 text-[var(--muted)]">
             {description}
@@ -154,7 +157,7 @@ export function ProjectCard({ project }: { project: Project }) {
         {project.stack.slice(0, 5).map((technology) => (
           <span
             key={technology}
-            className="rounded-full border border-[var(--border)] px-3 py-1 font-mono text-[11px] text-[var(--muted)]"
+            className="rounded-full border border-[var(--border)] px-3 py-1 font-mono text-xs text-[var(--muted)]"
           >
             {technology}
           </span>
@@ -162,7 +165,7 @@ export function ProjectCard({ project }: { project: Project }) {
       </div>
 
       <div className="mt-auto pt-6">
-        <p className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--muted)]">
+        <p className="text-xs font-medium uppercase leading-5 tracking-[0.12em] text-[var(--muted)]">
           {project.team}
         </p>
 
@@ -176,6 +179,85 @@ export function ProjectCard({ project }: { project: Project }) {
             View public repository ↗
           </a>
         ) : null}
+      </div>
+    </article>
+  );
+}
+
+interface RuptureLabFeatureProps {
+  project: Project;
+  imageSrc: string;
+  imageAlt: string;
+}
+
+export function RuptureLabFeature({
+  project,
+  imageSrc,
+  imageAlt,
+}: RuptureLabFeatureProps) {
+  return (
+    <article className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--surface)]">
+      <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="flex flex-col p-7 sm:p-8 lg:p-10">
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-strong)]">
+            Independent flagship · {project.period}
+          </p>
+
+          <h3 className="mt-4 text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">
+            {project.shortTitle}
+          </h3>
+
+          <p className="mt-4 max-w-xl text-base leading-7 text-[var(--muted)]">
+            {project.summary}
+          </p>
+
+          <ul className="mt-6 space-y-3 text-sm leading-6">
+            {project.highlights.slice(0, 3).map((highlight) => (
+              <li key={highlight} className="flex gap-3">
+                <span aria-hidden="true" className="text-[var(--accent)]">
+                  /
+                </span>
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            {project.stack.slice(0, 6).map((technology) => (
+              <span
+                key={technology}
+                className="rounded-full border border-[var(--border)] px-3 py-1 font-mono text-xs text-[var(--muted)]"
+              >
+                {technology}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-8">
+            <a
+              href={project.repoUrl!}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--foreground)] px-5 py-2.5 text-sm font-semibold text-[var(--background)] transition hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+            >
+              View repository
+              <span aria-hidden="true" className="ml-2">
+                ↗
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <figure className="flex items-center border-t border-[var(--border)] bg-[var(--foreground)] p-3 lg:border-l lg:border-t-0">
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            width={1600}
+            height={1000}
+            sizes="(max-width: 1024px) 100vw, 55vw"
+            className="h-auto w-full rounded-2xl object-contain"
+          />
+        </figure>
       </div>
     </article>
   );
@@ -197,7 +279,9 @@ export function ExperienceCard({ experience }: { experience: Experience }) {
         <h3 className="text-xl font-semibold tracking-[-0.025em]">
           {experience.role}
         </h3>
+
         <p className="mt-1 font-medium">{experience.organisation}</p>
+
         <p className="mt-4 max-w-3xl leading-7 text-[var(--muted)]">
           {experience.summary}
         </p>
@@ -218,7 +302,7 @@ export function ExperienceCard({ experience }: { experience: Experience }) {
             {experience.stack.map((technology) => (
               <span
                 key={technology}
-                className="rounded-full border border-[var(--border)] px-3 py-1 font-mono text-[11px] text-[var(--muted)]"
+                className="rounded-full border border-[var(--border)] px-3 py-1 font-mono text-xs text-[var(--muted)]"
               >
                 {technology}
               </span>

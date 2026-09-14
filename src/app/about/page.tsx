@@ -93,7 +93,7 @@ export default function AboutPage() {
         <section className="border-t border-[var(--border)] py-16 sm:py-20">
           <SectionHeading
             eyebrow="Selected credentials"
-            title="A few credentials that add useful context"
+            title="Selected credentials"
           />
 
           <div className="grid gap-4 md:grid-cols-3">

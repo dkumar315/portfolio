@@ -1,9 +1,35 @@
+import Image from "next/image";
+
 import { projects } from "@/content/portfolio";
+import type { Project } from "@/content/types";
 import {
   PageIntro,
   ProjectCard,
+  RuptureLabFeature,
   SectionHeading,
 } from "@/components/portfolio-ui";
+
+const ruptureLab = projects.find(
+  (project) => project.shortTitle === "RuptureLab",
+) as Project;
+
+const nat = projects.find(
+  (project) => project.shortTitle === "Network Analytic Tool",
+) as Project;
+
+const caseStudyProjects = projects.filter((project) =>
+  ["Wheat Crop Segmentation", "xRFM Benchmarking"].includes(project.shortTitle),
+);
+
+const supportingProjects = projects.filter(
+  (project) =>
+    ![
+      "RuptureLab",
+      "Network Analytic Tool",
+      "Wheat Crop Segmentation",
+      "xRFM Benchmarking",
+    ].includes(project.shortTitle),
+);
 
 export default function ProjectsPage() {
   return (
@@ -12,18 +38,67 @@ export default function ProjectsPage() {
         <PageIntro
           eyebrow="Projects"
           title="Selected work across full-stack, ML, systems and networking."
-          description="The strongest projects are prioritised by engineering depth and evidence, not by how many assignments can fit on a page."
+          description="A curated set of projects chosen for engineering depth, breadth and the quality of the work behind them."
         />
 
-        <section className="py-16 sm:py-20">
+        <section className="py-14 sm:py-16 lg:py-20">
           <SectionHeading
-            eyebrow="Project library"
-            title="Nine projects worth discussing."
-            description="RuptureLab is the flagship independent project. Industry and university work is presented with clear ownership boundaries and coursework source remains private."
+            eyebrow="Flagship"
+            title="RuptureLab"
+            description="The strongest independently owned project in the portfolio: a released API resilience workbench spanning backend services, real-time monitoring, persistence, testing and deployment."
+          />
+
+          <RuptureLabFeature
+            project={ruptureLab}
+            imageSrc="/projects/rupturelab/overview.png"
+            imageAlt="RuptureLab experiment overview dashboard"
+          />
+
+          <figure className="mt-5 overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--foreground)] p-3">
+            <Image
+              src="/projects/rupturelab/live-experiment.png"
+              alt="RuptureLab live experiment monitoring dashboard"
+              width={1600}
+              height={1000}
+              sizes="(max-width: 1280px) 100vw, 1200px"
+              className="h-auto w-full rounded-2xl object-contain"
+            />
+          </figure>
+        </section>
+
+        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
+          <SectionHeading
+            eyebrow="Industry client capstone"
+            title="Network Analytic Tool"
+            description="A major five-person engineering project combining simulation, backend services, frontend integration and network-resilience workflows."
+          />
+
+          <div className="max-w-4xl">
+            <ProjectCard project={nat} />
+          </div>
+        </section>
+
+        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
+          <SectionHeading
+            eyebrow="Case-study work"
+            title="Machine learning and computer vision"
+          />
+
+          <div className="grid gap-5 md:grid-cols-2">
+            {caseStudyProjects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </div>
+        </section>
+
+        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
+          <SectionHeading
+            eyebrow="Additional work"
+            title="Systems, networking and application engineering"
           />
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {projects.map((project) => (
+            {supportingProjects.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
           </div>

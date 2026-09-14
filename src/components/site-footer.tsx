@@ -15,17 +15,20 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm md:justify-end">
+        <nav
+          aria-label="Footer navigation"
+          className="flex flex-wrap gap-x-6 gap-y-3 text-sm md:justify-end"
+        >
           <Link href={routes.projects} className="hover:underline">
             Projects
           </Link>
           <Link href={routes.experience} className="hover:underline">
             Experience
           </Link>
-          <a href={`mailto:${site.email}`} className="hover:underline">
-            {site.email}
-          </a>
-        </div>
+          <Link href={routes.contact} className="hover:underline">
+            Contact
+          </Link>
+        </nav>
 
         <p className="text-xs text-[var(--muted)] md:col-span-2">
           © {new Date().getFullYear()} {site.name}. Built with Next.js and

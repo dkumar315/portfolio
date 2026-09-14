@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import ResumePage from "./page";
 
 describe("ResumePage", () => {
-  it("provides the resume summary and a safe PDF contact path", () => {
+  it("provides a concise engineering resume and contact path", () => {
     render(<ResumePage />);
 
     expect(
@@ -14,11 +14,19 @@ describe("ResumePage", () => {
       }),
     ).toBeVisible();
 
-    expect(
-      screen.getByRole("link", { name: /Contact for PDF/ }),
-    ).toHaveAttribute("href", "/contact");
+    expect(screen.getByRole("link", { name: /Contact me/ })).toHaveAttribute(
+      "href",
+      "/contact",
+    );
 
     expect(screen.getByText("Arms Operations Analysis Pty Ltd")).toBeVisible();
+
     expect(screen.getByText("RuptureLab")).toBeVisible();
+
+    expect(screen.getByText("Network Analytic Tool")).toBeVisible();
+
+    expect(screen.getByText("Wheat Crop Segmentation")).toBeVisible();
+
+    expect(screen.queryByText("xRFM Benchmarking")).not.toBeInTheDocument();
   });
 });

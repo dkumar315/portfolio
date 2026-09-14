@@ -7,6 +7,7 @@ import {
   ExperienceCard,
   PageIntro,
   ProjectCard,
+  RuptureLabFeature,
   SectionHeading,
   SkillGroupCard,
 } from "./portfolio-ui";
@@ -34,10 +35,12 @@ describe("portfolio UI", () => {
     );
 
     expect(screen.getByRole("heading", { name: "Intro title" })).toBeVisible();
+
     expect(screen.getByRole("link", { name: /Internal/ })).toHaveAttribute(
       "href",
       "/projects",
     );
+
     expect(screen.getByRole("link", { name: /External/ })).toHaveAttribute(
       "target",
       "_blank",
@@ -50,6 +53,7 @@ describe("portfolio UI", () => {
     );
 
     expect(screen.getByRole("heading", { name: "No actions" })).toBeVisible();
+
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 
@@ -78,6 +82,7 @@ describe("portfolio UI", () => {
     const publicProject = projects.find(
       (project) => project.slug === "rupturelab",
     );
+
     const privateProject = projects.find(
       (project) => project.slug === "bittrickle",
     );
@@ -88,20 +93,53 @@ describe("portfolio UI", () => {
     const { rerender } = render(<ProjectCard project={publicProject!} />);
 
     expect(
-      screen.getByRole("link", { name: /View public repository/ }),
+      screen.getByRole("link", {
+        name: /View public repository/,
+      }),
     ).toHaveAttribute("href", "https://github.com/dkumar315/rupture-lab");
 
     rerender(<ProjectCard project={privateProject!} />);
 
     expect(
-      screen.queryByRole("link", { name: /View public repository/ }),
+      screen.queryByRole("link", {
+        name: /View public repository/,
+      }),
     ).not.toBeInTheDocument();
+  });
+
+  it("renders the flagship project with released visual evidence", () => {
+    const ruptureLab = projects.find(
+      (project) => project.slug === "rupturelab",
+    );
+
+    expect(ruptureLab).toBeDefined();
+
+    render(
+      <RuptureLabFeature
+        project={ruptureLab!}
+        imageSrc="/projects/rupturelab/overview.png"
+        imageAlt="RuptureLab experiment overview dashboard"
+      />,
+    );
+
+    expect(screen.getByRole("heading", { name: "RuptureLab" })).toBeVisible();
+
+    expect(
+      screen.getByRole("img", {
+        name: "RuptureLab experiment overview dashboard",
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("link", { name: /View repository/ }),
+    ).toHaveAttribute("href", "https://github.com/dkumar315/rupture-lab");
   });
 
   it("renders experiences with and without a technology stack", () => {
     const engineering = experiences.find(
       (experience) => experience.slug === "armsoa",
     );
+
     const leadership = experiences.find(
       (experience) => experience.slug === "shalom-treasurer",
     );
@@ -122,8 +160,11 @@ describe("portfolio UI", () => {
     render(<SkillGroupCard group={skillGroups[0]} />);
 
     expect(
-      screen.getByRole("heading", { name: "Backend & APIs" }),
+      screen.getByRole("heading", {
+        name: "Backend & APIs",
+      }),
     ).toBeVisible();
+
     expect(screen.getByText(/Evidence:/)).toBeVisible();
   });
 });

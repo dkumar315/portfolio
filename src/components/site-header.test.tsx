@@ -13,14 +13,17 @@ describe("SiteHeader", () => {
     expect(screen.getByText("Software Engineer")).toBeVisible();
   });
 
-  it("contains the complete primary navigation", () => {
+  it("contains desktop and responsive copies of the primary navigation", () => {
     render(<SiteHeader />);
 
     for (const item of primaryNavigation) {
-      expect(screen.getByRole("link", { name: item.label })).toHaveAttribute(
-        "href",
-        item.href,
-      );
+      const links = screen.getAllByRole("link", { name: item.label });
+
+      expect(links).toHaveLength(2);
+
+      for (const link of links) {
+        expect(link).toHaveAttribute("href", item.href);
+      }
     }
   });
 
