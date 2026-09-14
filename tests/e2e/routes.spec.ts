@@ -35,3 +35,31 @@ for (const [route, heading] of routes) {
     expect(accessibility.violations).toEqual([]);
   });
 }
+
+test("mobile contact email remains a clean single line", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    !testInfo.project.name.includes("mobile"),
+    "mobile-layout regression check",
+  );
+
+  await page.goto("/contact");
+
+  const email = page.getByRole("heading", {
+    level: 2,
+    name: "devaanshk1630@gmail.com",
+  });
+
+  await expect(email).toBeVisible();
+
+  const metrics = await email.evaluate((element) => {
+    const styles = window.getComputedStyle(element);
+    const lineHeight = Number.parseFloat(styles.lineHeight);
+    const height = element.getBoundingClientRect().height;
+
+    return { height, lineHeight };
+  });
+
+  expect(metrics.height).toBeLessThan(metrics.lineHeight * 1.5);
+});

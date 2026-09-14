@@ -20,7 +20,7 @@ export default function AboutPage() {
           description={profile.positioning}
         />
 
-        <section className="grid gap-10 py-16 sm:py-20 lg:grid-cols-[0.8fr_1.2fr]">
+        <section className="grid gap-10 py-14 sm:py-16 lg:grid-cols-[0.8fr_1.2fr] lg:py-20">
           <div>
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-strong)]">
               How I work
@@ -50,21 +50,26 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="border-t border-[var(--border)] py-16 sm:py-20">
+        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Skills"
             title="Evidence-backed technical range"
             description="Each group is connected to projects or professional work rather than presented as a self-rated proficiency score."
           />
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {skillGroups.map((group) => (
-              <SkillGroupCard key={group.title} group={group} />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+            {skillGroups.map((group, index) => (
+              <div
+                key={group.title}
+                className={index < 3 ? "lg:col-span-2" : "lg:col-span-3"}
+              >
+                <SkillGroupCard group={group} />
+              </div>
             ))}
           </div>
         </section>
 
-        <section className="border-t border-[var(--border)] py-16 sm:py-20">
+        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading eyebrow="Education" title={education.institution} />
 
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
@@ -90,11 +95,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="border-t border-[var(--border)] py-16 sm:py-20">
-          <SectionHeading
-            eyebrow="Selected credentials"
-            title="Selected credentials"
-          />
+        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
+          <SectionHeading eyebrow="Credentials" title="Selected credentials" />
 
           <div className="grid gap-4 md:grid-cols-3">
             {credentials.map((credential) => (

@@ -316,7 +316,7 @@ export function ExperienceCard({ experience }: { experience: Experience }) {
 
 export function SkillGroupCard({ group }: { group: SkillGroup }) {
   return (
-    <article className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
+    <article className="h-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
       <h3 className="text-base font-semibold">{group.title}</h3>
 
       <div className="mt-4 flex flex-wrap gap-2">

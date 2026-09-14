@@ -95,7 +95,7 @@ export default function Home() {
         <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Flagship project"
-            title="RuptureLab"
+            title="Independent resilience engineering"
             description="An independently owned, released full-stack resilience workbench with backend, data, real-time monitoring and production-style quality concerns."
             href={routes.projects}
             linkLabel="All projects"
@@ -129,9 +129,14 @@ export default function Home() {
             description="Each group is tied to projects or professional engineering experience."
           />
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {skillGroups.map((group) => (
-              <SkillGroupCard key={group.title} group={group} />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+            {skillGroups.map((group, index) => (
+              <div
+                key={group.title}
+                className={index < 3 ? "lg:col-span-2" : "lg:col-span-3"}
+              >
+                <SkillGroupCard group={group} />
+              </div>
             ))}
           </div>
         </section>

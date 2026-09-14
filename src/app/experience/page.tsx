@@ -23,7 +23,7 @@ export default function ExperiencePage() {
           description={`${profile.positioning} My professional work has covered production education software, an industry-client network resilience platform and paid follow-on engineering.`}
         />
 
-        <section className="py-16 sm:py-20">
+        <section className="py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Software engineering"
             title="Professional engineering experience"
@@ -35,7 +35,7 @@ export default function ExperiencePage() {
           ))}
         </section>
 
-        <section className="border-t border-[var(--border)] py-16 sm:py-20">
+        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Leadership & teaching"
             title="Work beyond engineering"

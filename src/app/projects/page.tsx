@@ -44,7 +44,7 @@ export default function ProjectsPage() {
         <section className="py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Flagship"
-            title="RuptureLab"
+            title="Independent resilience engineering"
             description="The strongest independently owned project in the portfolio: a released API resilience workbench spanning backend services, real-time monitoring, persistence, testing and deployment."
           />
 
@@ -69,7 +69,7 @@ export default function ProjectsPage() {
         <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Industry client capstone"
-            title="Network Analytic Tool"
+            title="Industry-client network resilience"
             description="A major five-person engineering project combining simulation, backend services, frontend integration and network-resilience workflows."
           />
 
@@ -97,9 +97,14 @@ export default function ProjectsPage() {
             title="Systems, networking and application engineering"
           />
 
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {supportingProjects.map((project) => (
-              <ProjectCard key={project.slug} project={project} />
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-6">
+            {supportingProjects.map((project, index) => (
+              <div
+                key={project.slug}
+                className={index < 3 ? "xl:col-span-2" : "xl:col-span-3"}
+              >
+                <ProjectCard project={project} />
+              </div>
             ))}
           </div>
         </section>

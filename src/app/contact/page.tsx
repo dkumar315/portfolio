@@ -24,7 +24,7 @@ export default function ContactPage() {
                 Email
               </p>
 
-              <h2 className="mt-5 break-all text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
+              <h2 className="mt-5 break-words text-xl font-semibold leading-tight tracking-[-0.03em] [overflow-wrap:anywhere] sm:text-3xl">
                 {profile.email}
               </h2>
             </div>

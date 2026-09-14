@@ -18,8 +18,8 @@ const engineeringExperience = experiences.filter(
 );
 
 const resumeProjectTitles = [
-  "Network Analytic Tool",
   "RuptureLab",
+  "Network Analytic Tool",
   "Wheat Crop Segmentation",
 ] as const;
 
