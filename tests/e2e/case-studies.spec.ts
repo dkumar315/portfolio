@@ -113,3 +113,40 @@ test("RuptureLab gallery does not stretch shorter screenshots into empty dark ca
 
   expect(excessHeight).toBeLessThan(40);
 });
+
+test("RuptureLab lower evidence panels stay visually balanced on desktop", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name.includes("mobile"),
+    "desktop two-column evidence layout check",
+  );
+
+  await page.goto("/projects/rupturelab");
+
+  const liveImage = page.getByRole("img", {
+    name: "RuptureLab live experiment showing baseline fault and recovery phases",
+  });
+  const resultImage = page.getByRole("img", {
+    name: "RuptureLab persisted experiment result and contract evaluation",
+  });
+
+  await liveImage.scrollIntoViewIfNeeded();
+  await resultImage.scrollIntoViewIfNeeded();
+
+  const heights = await Promise.all(
+    [liveImage, resultImage].map((image) =>
+      image.evaluate((element) => {
+        const figure = element.closest("figure");
+
+        if (!figure) {
+          throw new Error("Expected screenshot inside a figure.");
+        }
+
+        return figure.getBoundingClientRect().height;
+      }),
+    ),
+  );
+
+  expect(Math.abs(heights[0] - heights[1])).toBeLessThan(40);
+});
