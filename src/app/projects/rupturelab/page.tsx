@@ -164,7 +164,7 @@ export default function RuptureLabCaseStudyPage() {
             </p>
           </div>
 
-          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+          <div className="mt-8 grid items-start gap-5 lg:grid-cols-2">
             <figure className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--foreground)] p-3 lg:col-span-2">
               <Image
                 src="/projects/rupturelab/overview.png"

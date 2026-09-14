@@ -82,3 +82,34 @@ test("RuptureLab released screenshots decode in the rendered page", async ({
       .toBe(true);
   }
 });
+
+test("RuptureLab gallery does not stretch shorter screenshots into empty dark cards", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name.includes("mobile"),
+    "desktop two-column gallery regression check",
+  );
+
+  await page.goto("/projects/rupturelab");
+
+  const image = page.getByRole("img", {
+    name: "RuptureLab live experiment showing baseline fault and recovery phases",
+  });
+
+  await image.scrollIntoViewIfNeeded();
+  await expect(image).toBeVisible();
+
+  const excessHeight = await image.evaluate((element) => {
+    const imageBox = element.getBoundingClientRect();
+    const figureBox = element.closest("figure")?.getBoundingClientRect();
+
+    if (!figureBox) {
+      throw new Error("Expected the screenshot to be inside a figure.");
+    }
+
+    return figureBox.height - imageBox.height;
+  });
+
+  expect(excessHeight).toBeLessThan(40);
+});
