@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import {
   CaseStudyDecisionGrid,
   CaseStudyFlow,
@@ -10,13 +11,20 @@ import {
 import { projects, routes } from "@/content/portfolio";
 import type { Project } from "@/content/types";
 
+export const metadata = createPageMetadata({
+  title: "Network Analytic Tool Case Study",
+  description:
+    "Public-safe case study of a five-person network-resilience engineering project spanning simulation, monitoring, RF degradation and recovery workflows.",
+  path: "/projects/nat",
+});
+
 const project = projects.find(
   (candidate) => candidate.slug === "nat",
 ) as Project;
 
 export default function NatCaseStudyPage() {
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <CaseStudyHero
           project={project}

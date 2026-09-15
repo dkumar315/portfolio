@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import Image from "next/image";
 
 import { projects } from "@/content/portfolio";
@@ -8,6 +9,13 @@ import {
   RuptureLabFeature,
   SectionHeading,
 } from "@/components/portfolio-ui";
+
+export const metadata = createPageMetadata({
+  title: "Projects",
+  description:
+    "Selected software engineering projects across full-stack development, backend systems, machine learning, networking and reliability.",
+  path: "/projects",
+});
 
 const ruptureLab = projects.find(
   (project) => project.shortTitle === "RuptureLab",
@@ -33,7 +41,7 @@ const supportingProjects = projects.filter(
 
 export default function ProjectsPage() {
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <PageIntro
           eyebrow="Projects"

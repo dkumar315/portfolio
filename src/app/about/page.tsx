@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import {
   credentials,
   education,
@@ -10,9 +11,16 @@ import {
   SkillGroupCard,
 } from "@/components/portfolio-ui";
 
+export const metadata = createPageMetadata({
+  title: "About",
+  description:
+    "About Devaansh Kumar: UNSW Computer Science graduate focused on reliable backend systems and polished full-stack software.",
+  path: "/about",
+});
+
 export default function AboutPage() {
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <PageIntro
           eyebrow="About"

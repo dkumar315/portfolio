@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import Image from "next/image";
 
 import {
@@ -12,13 +13,20 @@ import {
 import { projects, routes } from "@/content/portfolio";
 import type { Project } from "@/content/types";
 
+export const metadata = createPageMetadata({
+  title: "RuptureLab Case Study",
+  description:
+    "Case study of RuptureLab, an independent full-stack API resilience workbench for controlled failure, recovery, monitoring and contract verification.",
+  path: "/projects/rupturelab",
+});
+
 const project = projects.find(
   (candidate) => candidate.slug === "rupturelab",
 ) as Project;
 
 export default function RuptureLabCaseStudyPage() {
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <CaseStudyHero
           project={project}
@@ -226,7 +234,7 @@ export default function RuptureLabCaseStudyPage() {
             <a
               href="https://github.com/dkumar315/rupture-lab"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="mt-3 inline-flex font-semibold text-[var(--foreground)] underline decoration-[var(--border)] underline-offset-4"
             >
               View the v1.0.0 project repository ↗
