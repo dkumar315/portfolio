@@ -63,11 +63,20 @@ describe("createPageMetadata", () => {
         title: "Projects | Devaansh Kumar",
         description: "Selected software engineering projects.",
         url: "/projects",
+        images: [
+          {
+            url: "/opengraph-image",
+            width: 1200,
+            height: 630,
+            alt: "Devaansh Kumar — Software Engineer",
+          },
+        ],
       },
       twitter: {
-        card: "summary",
+        card: "summary_large_image",
         title: "Projects | Devaansh Kumar",
         description: "Selected software engineering projects.",
+        images: ["/opengraph-image"],
       },
     });
   });

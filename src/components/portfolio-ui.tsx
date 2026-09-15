@@ -53,7 +53,7 @@ export function PageIntro({
                 key={action.href}
                 href={action.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className={className}
               >
                 {action.label}
@@ -182,7 +182,7 @@ export function ProjectCard({ project }: { project: Project }) {
               <a
                 href={project.repoUrl}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="text-sm font-semibold underline decoration-[var(--border)] underline-offset-4 transition hover:decoration-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
               >
                 View public repository ↗
@@ -258,7 +258,7 @@ export function RuptureLabFeature({
             <a
               href={project.repoUrl!}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="inline-flex min-h-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2.5 text-sm font-semibold transition hover:border-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
             >
               View repository

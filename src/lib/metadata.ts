@@ -46,11 +46,20 @@ export function createPageMetadata({
       title: socialTitle,
       description,
       url: path,
+      images: [
+        {
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: `${site.name} — ${site.role}`,
+        },
+      ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: socialTitle,
       description,
+      images: ["/opengraph-image"],
     },
   };
 }

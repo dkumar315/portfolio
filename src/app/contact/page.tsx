@@ -14,7 +14,7 @@ const contactCard =
 
 export default function ContactPage() {
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <PageIntro
           eyebrow="Contact"
@@ -47,7 +47,7 @@ export default function ContactPage() {
             <a
               href={profile.linkedin}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className={contactCard}
             >
               <p className="text-xs uppercase tracking-[0.12em] text-[var(--muted)]">
@@ -59,7 +59,7 @@ export default function ContactPage() {
             <a
               href={profile.github}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className={contactCard}
             >
               <p className="text-xs uppercase tracking-[0.12em] text-[var(--muted)]">

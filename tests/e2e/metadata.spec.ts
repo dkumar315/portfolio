@@ -59,6 +59,7 @@ test("all public routes publish unique recruiter-facing metadata", async ({
     const canonical = await page
       .locator('link[rel="canonical"]')
       .getAttribute("href");
+
     expect(canonical).not.toBeNull();
     expect(new URL(canonical!).pathname).toBe(route);
 
@@ -70,6 +71,18 @@ test("all public routes publish unique recruiter-facing metadata", async ({
     await expect(
       page.locator('meta[property="og:description"]'),
     ).toHaveAttribute("content", descriptionPattern);
+
+    const image = await page
+      .locator('meta[property="og:image"]')
+      .getAttribute("content");
+
+    expect(image).not.toBeNull();
+    expect(new URL(image!).pathname).toContain("/opengraph-image");
+
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+      "content",
+      "summary_large_image",
+    );
   }
 });
 

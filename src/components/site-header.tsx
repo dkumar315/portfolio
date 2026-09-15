@@ -24,7 +24,7 @@ export function SiteHeader() {
             <a
               href={site.github}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
             >
               GitHub
@@ -32,7 +32,7 @@ export function SiteHeader() {
             <a
               href={site.linkedin}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
             >
               LinkedIn
@@ -59,7 +59,7 @@ export function SiteHeader() {
               <a
                 href={site.github}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
               >
                 GitHub ↗
@@ -67,7 +67,7 @@ export function SiteHeader() {
               <a
                 href={site.linkedin}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
               >
                 LinkedIn ↗

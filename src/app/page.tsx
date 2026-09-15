@@ -33,7 +33,7 @@ const supportingProjects = projects.filter((project) =>
 
 export default function Home() {
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <PageIntro
           eyebrow="Software Engineer · UNSW Computer Science"
