@@ -1,7 +1,11 @@
 import { expect, test } from "@playwright/test";
 
 const routeMetadata = [
-  ["/", /Devaansh Kumar \| Software Engineer/, /Software engineer and UNSW/],
+  [
+    "/",
+    /Devaansh Kumar \| Software Engineer/,
+    /Software engineer who completed a Bachelor of Science/,
+  ],
   [
     "/experience",
     /Experience \| Devaansh Kumar/,

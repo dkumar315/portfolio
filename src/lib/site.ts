@@ -5,5 +5,5 @@ export const site = {
   github: "https://github.com/dkumar315",
   linkedin: "https://www.linkedin.com/in/devaansh-kumar-31510cse/",
   description:
-    "Software engineer and UNSW Computer Science graduate building reliable backend systems and polished full-stack products.",
+    "Software engineer who completed a Bachelor of Science (Computer Science) at UNSW, building reliable backend systems and polished full-stack products.",
 } as const;

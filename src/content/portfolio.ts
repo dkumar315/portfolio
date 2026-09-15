@@ -37,7 +37,7 @@ export const profile = {
   positioning:
     "Software engineer focused on reliable backend systems and polished full-stack products.",
   introduction:
-    "UNSW Computer Science graduate with professional engineering experience across Python, FastAPI, TypeScript, React, APIs, databases, testing and production web systems.",
+    "Completed a Bachelor of Science (Computer Science) at UNSW with professional engineering experience across Python, FastAPI, TypeScript, React, APIs, databases, testing and production web systems.",
 } as const;
 
 export const experiences: readonly Experience[] = [
@@ -322,7 +322,7 @@ export const projects: readonly Project[] = [
     featuredRank: 6,
     team: "Advanced operating-systems coursework",
     summary:
-      "Kernel-level virtual-memory work in C covering copy-on-write process memory, dynamic heap growth and demand-loaded memory mappings.",
+      "Kernel-level virtual-memory work in C covering copy-on-write process memory, address-space management and dynamic heap growth.",
     stack: ["C", "OS/161", "Virtual Memory", "MIPS", "Kernel Development"],
     highlights: [
       "Implemented copy-on-write semantics for fork with shared physical pages, reference counting and write-fault handling.",
@@ -386,11 +386,11 @@ export const projects: readonly Project[] = [
     featuredRank: 9,
     team: "Individual computer-graphics project",
     summary:
-      "A playable first-person bank-heist scenario built in Unreal Engine with combat, AI, HUD systems and a morality mechanic.",
+      "A playable first-person bank-heist scenario built in Unreal Engine with combat, enemy AI and a complete gameplay loop.",
     stack: ["Unreal Engine", "C++", "Blueprints", "Game AI"],
     highlights: [
       "Built a complete gameplay loop from level entry through combat and objective completion.",
-      "Implemented movement, shooting, aiming, reloading, enemy pursuit, boss behaviour and multiple game-over states.",
+      "Implemented movement, shooting, reloading, hit detection, enemy combat behaviour and damage handling.",
       "Added a morality system where civilian damage creates a separate failure condition.",
       "Designed the level, HUD, lighting, fog, audio and interaction feedback around the gameplay loop.",
     ],

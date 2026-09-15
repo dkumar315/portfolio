@@ -14,7 +14,7 @@ import {
 export const metadata = createPageMetadata({
   title: "About",
   description:
-    "About Devaansh Kumar: UNSW Computer Science graduate focused on reliable backend systems and polished full-stack software.",
+    "About Devaansh Kumar: software engineer who completed a Bachelor of Science (Computer Science) at UNSW, focused on reliable backend systems and polished full-stack software.",
   path: "/about",
 });
 

@@ -31,7 +31,7 @@ export default function NatCaseStudyPage() {
           eyebrow="Industry-client capstone"
           title="Integrating simulation, monitoring and recovery for a network-resilience demonstrator."
           summary="A five-person UNSW engineering project that combined network simulation, operational monitoring, resilient communications planning, terrain-aware RF analysis and recovery workflows into one Dockerised demonstrator."
-          sourceLabel="Private client source · public-safe case study"
+          sourceLabel="Private project source · public-safe case study"
         />
 
         <CaseStudySection
