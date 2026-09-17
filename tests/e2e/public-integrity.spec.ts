@@ -14,6 +14,7 @@ const publicRoutes = [
 ] as const;
 
 const allowedExternalHosts = new Set(["github.com", "www.linkedin.com"]);
+const approvedPhoneHref = "tel:+61431821862";
 
 test("every public page has one coherent document structure", async ({
   page,
@@ -129,12 +130,11 @@ test("all internal links reachable from public pages resolve successfully", asyn
   }
 });
 
-test("public pages do not expose obvious sensitive identifiers", async ({
+test("public pages do not expose unapproved sensitive identifiers", async ({
   page,
 }) => {
   const forbiddenPatterns = [
     /\bz\d{7}\b/i,
-    /\+61[\s()-]*\d[\d\s()-]{7,}/,
     /subclass\s*(500|485)/i,
     /permanent\s+residen(cy|t)/i,
     /employer\s+sponsorship/i,
@@ -151,6 +151,28 @@ test("public pages do not expose obvious sensitive identifiers", async ({
 
     for (const pattern of forbiddenPatterns) {
       expect(text, `${route} should not match ${pattern}`).not.toMatch(pattern);
+    }
+  }
+});
+
+test("only the approved public phone link is exposed", async ({ page }) => {
+  for (const route of publicRoutes) {
+    await page.goto(route, {
+      waitUntil: "networkidle",
+    });
+
+    const telLinks = await page
+      .locator('a[href^="tel:"]')
+      .evaluateAll((links) =>
+        links.map((link) => link.getAttribute("href") ?? ""),
+      );
+
+    if (route === "/contact" || route === "/resume") {
+      expect(telLinks, `${route} approved phone link`).toEqual([
+        approvedPhoneHref,
+      ]);
+    } else {
+      expect(telLinks, `${route} should not expose a phone link`).toEqual([]);
     }
   }
 });

@@ -14,7 +14,7 @@ describe("NatCaseStudyPage", () => {
       }),
     ).toBeVisible();
 
-    expect(screen.getByText("94 HD")).toBeVisible();
+    expect(screen.getByText("94/100")).toBeVisible();
     expect(screen.getByText("Paid")).toBeVisible();
     expect(screen.getByText("Client confidentiality")).toBeVisible();
 

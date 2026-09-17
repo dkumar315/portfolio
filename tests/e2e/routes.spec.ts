@@ -2,10 +2,10 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 const routes = [
-  ["/", /Backend-minded\. Full-stack capable\./],
-  ["/experience", /Engineering work across product/],
-  ["/projects", /Selected work across full-stack/],
-  ["/about", /Software engineering with breadth/],
+  ["/", /Backend-focused software engineer/],
+  ["/experience", /Software engineering across product/],
+  ["/projects", /Selected software engineering projects/],
+  ["/about", /I like building software I can explain/],
   ["/resume", /Software engineering experience/],
   ["/contact", /Interested in working together/],
   ["/projects/rupturelab", /Building a repeatable API resilience workbench/],

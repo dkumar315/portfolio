@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { routes } from "@/content/portfolio";
+import { primaryNavigation } from "@/content/portfolio";
 import { site } from "@/lib/site";
 
 export function SiteFooter() {
@@ -10,24 +10,20 @@ export function SiteFooter() {
         <div>
           <p className="font-semibold">{site.name}</p>
           <p className="mt-2 max-w-md text-sm leading-6 text-[var(--muted)]">
-            Software engineer building reliable backend systems and polished
-            full-stack products.
+            Backend-focused software engineer with full-stack experience across
+            Python/FastAPI and TypeScript/React.
           </p>
         </div>
 
         <nav
           aria-label="Footer navigation"
-          className="flex flex-wrap gap-x-6 gap-y-3 text-sm md:justify-end"
+          className="flex flex-wrap gap-x-5 gap-y-3 text-sm md:justify-end"
         >
-          <Link href={routes.projects} className="hover:underline">
-            Projects
-          </Link>
-          <Link href={routes.experience} className="hover:underline">
-            Experience
-          </Link>
-          <Link href={routes.contact} className="hover:underline">
-            Contact
-          </Link>
+          {primaryNavigation.map((item) => (
+            <Link key={item.href} href={item.href} className="hover:underline">
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <p className="text-xs text-[var(--muted)] md:col-span-2">

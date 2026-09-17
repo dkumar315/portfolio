@@ -20,6 +20,10 @@ const MAX_CLS = 0.1;
 test("public routes stay within conservative production budgets", async ({
   browser,
 }) => {
+  // This test traverses every public route. The timeout below is
+  // wall-clock headroom only; the per-route performance budgets
+  // asserted by this test remain unchanged.
+  test.setTimeout(60_000);
   for (const route of publicRoutes) {
     const context = await browser.newContext({
       viewport: { width: 1440, height: 1000 },

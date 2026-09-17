@@ -1,13 +1,72 @@
 @import "tailwindcss";
 
-:root {
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
   --background: #f5f4ef;
   --surface: #fbfaf7;
+  --surface-strong: #edf3ef;
   --foreground: #151816;
-  --muted: #656a65;
-  --border: #d9dbd5;
-  --accent: #077a68;
+  --muted: #505851;
+  --border: #cfd4ce;
+  --border-strong: #aeb8b0;
+  --accent: #0a7d6b;
   --accent-strong: #056353;
+  --accent-soft: #e3f0eb;
+  --accent-soft-strong: #d4e9e1;
+  --button-background: #0b6556;
+  --button-foreground: #ffffff;
+  --media-frame: #111513;
+  --contact-panel: #17201c;
+  --contact-panel-hover: #1d2b25;
+  --contact-panel-text: #f7f7f3;
+  --card-shadow: 0 10px 28px rgb(23 40 31 / 0.055);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --background: #0f1311;
+    --surface: #151a17;
+    --surface-strong: #1a241f;
+    --foreground: #f0f3f0;
+    --muted: #b6c0b9;
+    --border: #303a34;
+    --border-strong: #46534c;
+    --accent: #65d6bc;
+    --accent-strong: #8be5d1;
+    --accent-soft: #18372f;
+    --accent-soft-strong: #20483d;
+    --button-background: #7adfc7;
+    --button-foreground: #0b1712;
+    --media-frame: #090c0a;
+    --contact-panel: #16251f;
+    --contact-panel-hover: #1b3028;
+    --contact-panel-text: #f0f3f0;
+    --card-shadow: 0 12px 30px rgb(0 0 0 / 0.2);
+  }
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #0f1311;
+  --surface: #151a17;
+  --surface-strong: #1a241f;
+  --foreground: #f0f3f0;
+  --muted: #b6c0b9;
+  --border: #303a34;
+  --border-strong: #46534c;
+  --accent: #65d6bc;
+  --accent-strong: #8be5d1;
+  --accent-soft: #18372f;
+  --accent-soft-strong: #20483d;
+  --button-background: #7adfc7;
+  --button-foreground: #0b1712;
+  --media-frame: #090c0a;
+  --contact-panel: #16251f;
+  --contact-panel-hover: #1b3028;
+  --contact-panel-text: #f0f3f0;
+  --card-shadow: 0 12px 30px rgb(0 0 0 / 0.2);
 }
 
 @theme inline {
@@ -29,6 +88,24 @@ html {
 
 body {
   margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.card-elevated {
+  box-shadow: var(--card-shadow);
+}
+
+.theme-toggle__sun {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle__moon {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle__sun {
+  display: block;
 }
 
 a {
@@ -36,7 +113,7 @@ a {
 }
 
 ::selection {
-  background: #c8e9e1;
+  background: var(--accent-soft);
   color: var(--foreground);
 }
 

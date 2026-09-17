@@ -24,20 +24,20 @@ export const routes = {
 } as const;
 
 export const primaryNavigation = [
+  { label: "Home", href: routes.home },
   { label: "Experience", href: routes.experience },
   { label: "Projects", href: routes.projects },
-  { label: "About", href: routes.about },
   { label: "Resume", href: routes.resume },
+  { label: "About", href: routes.about },
   { label: "Contact", href: routes.contact },
 ] as const satisfies readonly NavigationItem[];
 
 export const profile = {
   ...site,
-  location: "Sydney, Australia",
   positioning:
-    "Software engineer focused on reliable backend systems and polished full-stack products.",
+    "Backend-focused software engineer with hands-on full-stack experience.",
   introduction:
-    "Completed a Bachelor of Science (Computer Science) at UNSW with professional engineering experience across Python, FastAPI, TypeScript, React, APIs, databases, testing and production web systems.",
+    "Completed a Bachelor of Science (Computer Science) at UNSW, with professional experience building Python/FastAPI and TypeScript/React software, APIs, database-backed workflows and production features.",
 } as const;
 
 export const experiences: readonly Experience[] = [
@@ -45,16 +45,18 @@ export const experiences: readonly Experience[] = [
     slug: "armsoa",
     role: "Software Engineer",
     organisation: "Arms Operations Analysis Pty Ltd",
+    organisationSummary:
+      "Australian engineering company working on operational analysis and network-resilience software.",
     location: "Sydney, Australia · Remote",
     period: "Aug 2026 – Sep 2026",
     category: "engineering",
     isCurrent: false,
     summary:
-      "Selected for paid follow-on engineering after an industry-client capstone to help mature a network correction and recovery concept demonstrator.",
+      "Selected for a paid follow-on engagement after the industry-client capstone, continuing work on the network correction and recovery demonstrator.",
     highlights: [
-      "Engineered Python/FastAPI and React/TypeScript capabilities spanning network simulation, monitoring, RF/network degradation analysis and recovery workflows.",
-      "Worked across tactical interfaces, recovery-drone simulation, REST/OpenAPI APIs, Docker deployment, automated testing and end-to-end integration.",
-      "Helped consolidate multiple software prototypes into a unified demonstrator while preserving clear boundaries between simulation and operator decision support.",
+      "Built Python/FastAPI and React/TypeScript capabilities for network simulation, monitoring, RF/network degradation analysis and recovery workflows.",
+      "Integrated tactical interfaces, recovery-drone simulation, REST/OpenAPI APIs, Docker deployment, automated testing and end-to-end validation.",
+      "Consolidated multiple software prototypes into a unified demonstrator while keeping simulation separate from operator decision support.",
     ],
     stack: [
       "Python",
@@ -69,16 +71,18 @@ export const experiences: readonly Experience[] = [
     slug: "tandem-learning",
     role: "Software Engineering Intern",
     organisation: "Tandem Learning",
+    organisationSummary:
+      "Sydney edtech company building learning and assessment software.",
     location: "Sydney, Australia · Hybrid",
     period: "Oct 2025 – Mar 2026",
     category: "engineering",
     isCurrent: false,
     summary:
-      "Shipped production full-stack features for a live education platform in a small product engineering team.",
+      "Shipped production features for a live education platform in a 4–5 engineer product team.",
     highlights: [
       "Developed and shipped 8–10 production features using Next.js, React, TypeScript, Prisma and Drizzle ORM.",
       "Built and stabilised multi-step assessment configuration, attempt and results workflows while resolving routing, TypeScript and production-build issues.",
-      "Worked on AI-assisted grading and chat workflows, including streamed responses, tool integrations, prompt behaviour and client/server message handling.",
+      "Improved AI-assisted grading and chat workflows, including streamed responses, tool integrations, prompt behaviour and client/server message handling.",
       "Integrated product analytics and resolved issues across rendering, APIs, validation, database-backed workflows and CI/build pipelines.",
       "Contributed to a platform supporting 1,642+ students and 8,026+ assessment attempts.",
     ],
@@ -136,7 +140,7 @@ export const experiences: readonly Experience[] = [
     highlights: [
       "Managed a $35,000+ student budget supporting 130+ residents.",
       "Supported financial planning across 20+ events and identified approximately $2,000–$4,000 in savings.",
-      "Worked within an eight-member student leadership team.",
+      "Collaborated within an eight-member student leadership team.",
     ],
   },
 ];
@@ -200,15 +204,15 @@ export const projects: readonly Project[] = [
       "MapLibre",
     ],
     highlights: [
-      "Architected and integrated backend services, shared API contracts and interactive frontend workflows.",
-      "Worked across scenario simulation, network-health monitoring, stress events, PACE communications, RF degradation modelling and recovery-drone workflows.",
+      "Designed and integrated backend services, shared API contracts and interactive frontend workflows.",
+      "Integrated scenario simulation, network-health monitoring, stress events, PACE communications, RF degradation modelling and recovery-drone workflows.",
       "Led technical delivery across Jira/Git workflows, client requirements, demonstrations, QA and final handover.",
       "Kept the network simulator and deterministic operator tooling separate from any external decision layer.",
     ],
     proof: [
       "Industry-client UNSW Computer Science capstone.",
       "Five-person engineering team.",
-      "Awarded 94 HD for COMP3900.",
+      "Awarded 94/100 (High Distinction) for the industry-client capstone.",
       "The capstone led to paid follow-on software engineering work with Arms Operations Analysis.",
     ],
     sourceAccess: "private-client",
@@ -327,11 +331,11 @@ export const projects: readonly Project[] = [
     highlights: [
       "Implemented copy-on-write semantics for fork with shared physical pages, reference counting and write-fault handling.",
       "Added sbrk support for safe dynamic heap growth and shrinkage.",
-      "Implemented mmap and munmap with demand loading, protection handling and dirty-page write-back.",
+      "Extended address-space and fault-handling logic to support page sharing and dynamic heap changes.",
     ],
     proof: [
       "Copy-on-write avoided eager duplication of physical pages after fork.",
-      "Demand faults allocated or loaded pages only when first accessed.",
+      "Memory-management changes covered address-space, page-table, TLB and syscall behaviour.",
       "Work required page-table, TLB, address-space and kernel syscall changes.",
     ],
     sourceAccess: "private-coursework",
@@ -370,7 +374,7 @@ export const projects: readonly Project[] = [
     stack: ["TypeScript", "Node.js", "REST APIs", "Authentication", "Jest"],
     highlights: [
       "Developed backend quiz and session workflows including authentication, game-state progression and answer validation.",
-      "Worked within a shared Git-based team workflow with structured API contracts and automated testing.",
+      "Collaborated in a shared Git-based team workflow with structured API contracts and automated testing.",
       "Implemented and tested administrative and player-facing API behaviour across the quiz lifecycle.",
     ],
     proof: [],
@@ -391,7 +395,6 @@ export const projects: readonly Project[] = [
     highlights: [
       "Built a complete gameplay loop from level entry through combat and objective completion.",
       "Implemented movement, shooting, reloading, hit detection, enemy combat behaviour and damage handling.",
-      "Added a morality system where civilian damage creates a separate failure condition.",
       "Designed the level, HUD, lighting, fog, audio and interaction feedback around the gameplay loop.",
     ],
     proof: [],
@@ -480,10 +483,9 @@ export const education = {
   period: "Sep 2023 – Sep 2026",
   location: "Sydney, Australia",
   highlights: [
-    "Completed 4 September 2026; conferral scheduled for 30 September 2026.",
     "UNSW International Student Excellence Award — merit scholarship worth AUD 8,800.",
     "UNSW Employability Award — 2026.",
-    "COMP3900 Computer Science Project — 94 HD.",
+    "Industry-client Computer Science Project — 94/100 (High Distinction).",
   ],
 } as const satisfies Education;
 

@@ -1,7 +1,12 @@
 import Link from "next/link";
 
-import { primaryNavigation, routes } from "@/content/portfolio";
+import { SiteNavigation } from "@/components/site-navigation";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { routes } from "@/content/portfolio";
 import { site } from "@/lib/site";
+
+const externalLink =
+  "whitespace-nowrap py-1 font-medium text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]";
 
 export function SiteHeader() {
   return (
@@ -10,89 +15,77 @@ export function SiteHeader() {
         <div className="flex items-center justify-between gap-5">
           <Link
             href={routes.home}
+            aria-label={`${site.name} home`}
             className="shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
           >
-            <span className="block text-sm font-semibold tracking-[-0.02em]">
+            <span className="block text-[15px] font-semibold tracking-[-0.02em] sm:text-base">
               {site.name}
             </span>
-            <span className="mt-0.5 block text-xs text-[var(--muted)]">
-              {site.role}
+            <span className="mt-0.5 block text-[13px] text-[var(--muted)]">
+              {site.role} · Sydney
             </span>
           </Link>
 
-          <div className="flex items-center gap-4 text-xs font-medium xl:hidden">
-            <a
-              href={site.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-            >
-              GitHub
-            </a>
-            <a
-              href={site.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-            >
-              LinkedIn
-            </a>
-          </div>
+          <div className="flex items-center gap-6">
+            <div className="hidden items-center gap-6 text-sm xl:flex">
+              <SiteNavigation listClassName="flex items-center gap-6" />
 
-          <div className="hidden items-center gap-8 xl:flex">
-            <nav aria-label="Primary navigation">
-              <ul className="flex items-center gap-6 text-sm">
-                {primaryNavigation.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="font-medium text-[var(--muted)] transition hover:text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+              <span
+                aria-hidden="true"
+                className="h-4 w-px bg-[var(--border-strong)]"
+              />
 
-            <div className="flex gap-4 text-xs font-medium">
               <a
                 href={site.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+                className={externalLink}
               >
                 GitHub ↗
               </a>
+
               <a
                 href={site.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+                className={externalLink}
               >
                 LinkedIn ↗
               </a>
             </div>
+
+            <ThemeToggle />
           </div>
         </div>
 
-        <nav
-          aria-label="Primary navigation"
-          className="mt-4 overflow-x-auto border-t border-[var(--border)] pt-3 xl:hidden"
-        >
-          <ul className="flex min-w-max flex-nowrap items-center gap-4 pr-2 text-[13px]">
-            {primaryNavigation.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="whitespace-nowrap font-medium text-[var(--muted)] transition hover:text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="mt-4 overflow-x-auto border-t border-[var(--border)] pt-3 xl:hidden">
+          <div className="flex min-w-max items-center gap-4 pr-2 text-sm">
+            <SiteNavigation listClassName="flex items-center gap-4" />
+
+            <span
+              aria-hidden="true"
+              className="h-4 w-px shrink-0 bg-[var(--border-strong)]"
+            />
+
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={externalLink}
+            >
+              GitHub ↗
+            </a>
+
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={externalLink}
+            >
+              LinkedIn ↗
+            </a>
+          </div>
+        </div>
       </div>
     </header>
   );

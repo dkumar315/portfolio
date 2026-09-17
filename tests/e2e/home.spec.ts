@@ -12,13 +12,17 @@ test.describe("portfolio home page", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Backend-minded\. Full-stack capable\./,
+        name: /Backend-focused software engineer/,
       }),
     ).toBeVisible();
 
     await expect(
       page.getByRole("link", { name: /View projects/ }),
     ).toHaveAttribute("href", "/projects");
+
+    await expect(
+      page.getByRole("link", { name: /Download resume/ }),
+    ).toHaveAttribute("href", "/Devaansh-Kumar-Resume.pdf");
 
     await expect(
       page.getByRole("link", { name: /Contact me/ }),
@@ -80,15 +84,27 @@ test.describe("portfolio home page", () => {
 
     expect(results.violations).toEqual([]);
   });
-  test("keeps engineering snapshot content padded away from cell edges", async ({
+
+  test("keeps clickable engineering snapshot content padded away from cell edges", async ({
     page,
   }) => {
     const snapshot = page.getByRole("region", {
       name: "Engineering snapshot",
     });
 
-    const cells = snapshot.locator(":scope > div");
+    const cells = snapshot.locator(":scope > a");
     await expect(cells).toHaveCount(4);
+
+    const hrefs = await cells.evaluateAll((links) =>
+      links.map((link) => link.getAttribute("href")),
+    );
+
+    expect(hrefs).toEqual([
+      "/experience",
+      "/projects/rupturelab",
+      "/projects/nat",
+      "#skills",
+    ]);
 
     const gaps = await cells.evaluateAll((elements) =>
       elements.map((element) => {

@@ -4,8 +4,8 @@ import { describe, expect, it } from "vitest";
 import ContactPage from "./page";
 
 describe("ContactPage", () => {
-  it("provides direct professional contact channels without a phone number", () => {
-    const { container } = render(<ContactPage />);
+  it("provides direct professional contact channels without redundant helper copy", () => {
+    render(<ContactPage />);
 
     expect(
       screen.getByRole("heading", {
@@ -19,6 +19,12 @@ describe("ContactPage", () => {
         name: /devaanshk1630@gmail.com/,
       }),
     ).toHaveAttribute("href", "mailto:devaanshk1630@gmail.com");
+
+    expect(
+      screen.getByRole("link", {
+        name: /\+61 431 821 862/,
+      }),
+    ).toHaveAttribute("href", "tel:+61431821862");
 
     expect(
       screen.getByRole("link", {
@@ -36,6 +42,11 @@ describe("ContactPage", () => {
 
     expect(screen.getByText("Sydney, Australia")).toBeVisible();
 
-    expect(container.querySelector('a[href^="tel:"]')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Best for role details/i),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Tap to call for a quick recruiter/i),
+    ).not.toBeInTheDocument();
   });
 });

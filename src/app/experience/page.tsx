@@ -27,15 +27,15 @@ export default function ExperiencePage() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <PageIntro
           eyebrow="Experience"
-          title="Engineering work across product, simulation and full-stack systems."
-          description={`${profile.positioning} My professional work has covered production education software, an industry-client network resilience platform and paid follow-on engineering.`}
+          title="Software engineering across product and network-resilience systems."
+          description={`${profile.positioning} My professional work spans production education software, an industry-client network-resilience demonstrator and a paid follow-on engineering engagement.`}
         />
 
         <section className="py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Software engineering"
             title="Professional engineering experience"
-            description="The roles most directly relevant to software engineering positions."
+            description="The roles where I shipped, integrated and tested real software systems."
           />
 
           {engineeringExperience.map((experience) => (
@@ -46,8 +46,8 @@ export default function ExperiencePage() {
         <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Leadership & teaching"
-            title="Work beyond engineering"
-            description="Roles that developed communication, judgement, mentoring and operational responsibility."
+            title="Tutoring and student leadership"
+            description="Roles that strengthened communication, mentoring, judgement and operational responsibility."
           />
 
           {additionalExperience.map((experience) => (

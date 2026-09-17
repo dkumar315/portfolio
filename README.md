@@ -2,6 +2,8 @@
 
 Personal software engineering portfolio for Devaansh Kumar.
 
+**Live site:** https://devaansh-kumar.vercel.app
+
 The site presents professional experience, independently owned engineering work, and public-safe technical case studies with an emphasis on implementation decisions, validation, and technical credibility.
 
 ## Stack

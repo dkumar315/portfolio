@@ -124,6 +124,33 @@ test("RuptureLab lower evidence panels stay visually balanced on desktop", async
 
   await page.goto("/projects/rupturelab");
 
+  // This is a geometry assertion, so measure only after fonts and lazy visual
+  // evidence have settled. The <40 px balance requirement itself is unchanged.
+  await page.evaluate(() => {
+    window.scrollTo(0, document.documentElement.scrollHeight);
+  });
+  await page.waitForLoadState("networkidle");
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+
+    const images = Array.from(
+      document.querySelectorAll<HTMLImageElement>("main img"),
+    );
+    await Promise.all(
+      images.map(async (image) => {
+        try {
+          await image.decode();
+        } catch {
+          // A failed decode is surfaced by the dedicated image-loading tests.
+        }
+      }),
+    );
+
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+    });
+  });
+
   const liveImage = page.getByRole("img", {
     name: "RuptureLab live experiment showing baseline fault and recovery phases",
   });

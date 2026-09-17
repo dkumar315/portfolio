@@ -116,9 +116,9 @@ export function CaseStudyProofGrid({ items }: { items: readonly ProofItem[] }) {
       {items.map((item) => (
         <article
           key={item.label}
-          className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5"
+          className="card-elevated rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5"
         >
-          <p className="text-3xl font-semibold tracking-[-0.035em]">
+          <p className="text-3xl font-semibold tracking-[-0.035em] text-[var(--accent-strong)]">
             {item.value}
           </p>
           <h3 className="mt-3 text-sm font-semibold">{item.label}</h3>
@@ -142,7 +142,7 @@ export function CaseStudyFlow({ steps }: { steps: readonly FlowStep[] }) {
       {steps.map((step, index) => (
         <li
           key={step.label}
-          className={`rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 ${
+          className={`card-elevated rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 ${
             index < 3 ? "xl:col-span-2" : "xl:col-span-3"
           }`}
         >
@@ -174,7 +174,7 @@ export function CaseStudyDecisionGrid({
       {items.map((item) => (
         <article
           key={item.title}
-          className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6"
+          className="card-elevated rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6"
         >
           <h3 className="text-lg font-semibold tracking-[-0.02em]">
             {item.title}
@@ -196,7 +196,7 @@ export function CaseStudyNote({
   children: ReactNode;
 }) {
   return (
-    <aside className="rounded-2xl border border-[var(--border)] border-l-4 border-l-[var(--accent)] bg-[var(--surface)] p-6">
+    <aside className="rounded-2xl border border-[var(--border)] border-l-4 border-l-[var(--accent)] bg-[var(--accent-soft)] p-6">
       <h3 className="text-sm font-semibold">{title}</h3>
       <div className="mt-3 text-sm leading-6 text-[var(--muted)]">
         {children}

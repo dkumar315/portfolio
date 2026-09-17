@@ -4,7 +4,7 @@ const routeMetadata = [
   [
     "/",
     /Devaansh Kumar \| Software Engineer/,
-    /Software engineer who completed a Bachelor of Science/,
+    /Sydney-based software engineer who completed a Bachelor of Science/,
   ],
   [
     "/experience",
@@ -17,7 +17,7 @@ const routeMetadata = [
     /Selected software engineering projects/,
   ],
   ["/about", /About \| Devaansh Kumar/, /About Devaansh Kumar/],
-  ["/resume", /Resume \| Devaansh Kumar/, /Web resume for Devaansh Kumar/],
+  ["/resume", /Resume \| Devaansh Kumar/, /Resume for Devaansh Kumar/],
   ["/contact", /Contact \| Devaansh Kumar/, /Contact Devaansh Kumar/],
   [
     "/projects/rupturelab",

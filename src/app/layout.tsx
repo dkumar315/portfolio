@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { SiteFooter } from "@/components/site-footer";
-import { StructuredData } from "@/components/structured-data";
 import { SiteHeader } from "@/components/site-header";
+import { StructuredData } from "@/components/structured-data";
 import { getSiteUrl } from "@/lib/metadata";
 import { site } from "@/lib/site";
 
@@ -18,6 +18,24 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const themeBootstrap = `
+(() => {
+  try {
+    const saved = localStorage.getItem("portfolio-theme");
+    const theme =
+      saved === "light" || saved === "dark"
+        ? saved
+        : window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+
+    document.documentElement.dataset.theme = theme;
+  } catch {
+    document.documentElement.dataset.theme = "light";
+  }
+})();
+`;
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
@@ -72,8 +90,17 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  colorScheme: "light",
-  themeColor: "#f5f4ef",
+  colorScheme: "light dark",
+  themeColor: [
+    {
+      media: "(prefers-color-scheme: light)",
+      color: "#f5f4ef",
+    },
+    {
+      media: "(prefers-color-scheme: dark)",
+      color: "#0f1311",
+    },
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -81,15 +108,23 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en-AU"
       className={`${geistSans.variable} ${geistMono.variable}`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+      </head>
+
       <body className="bg-background text-foreground min-h-screen font-sans antialiased">
         <StructuredData />
+
         <a
           href="#main-content"
           className="bg-foreground text-background focus-visible:ring-accent sr-only z-[100] rounded-sm px-4 py-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
         >
           Skip to content
         </a>
+
         <SiteHeader />
         {children}
         <SiteFooter />
