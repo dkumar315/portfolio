@@ -17,7 +17,7 @@ import {
 export const metadata = createPageMetadata({
   title: "Resume",
   description:
-    "Web resume for Devaansh Kumar covering software engineering experience, selected technical projects and UNSW Computer Science education.",
+    "Resume for Devaansh Kumar covering software engineering experience, selected technical projects and UNSW Computer Science education.",
   path: "/resume",
 });
 
@@ -43,17 +43,21 @@ export default function ResumePage() {
         <PageIntro
           eyebrow="Resume"
           title="Software engineering experience, selected work and education."
-          description="A concise web resume focused on the engineering experience and technical work most relevant to graduate and junior software roles."
+          description="A concise web resume, plus a downloadable PDF for applications and recruiter review."
           actions={[
             {
-              label: "Contact me",
-              href: routes.contact,
+              label: "Download resume PDF",
+              href: profile.resumeHref,
+              download: true,
               primary: true,
             },
             {
-              label: "LinkedIn",
-              href: profile.linkedin,
-              external: true,
+              label: `Call ${profile.phoneDisplay}`,
+              href: profile.phoneHref,
+            },
+            {
+              label: "Contact me",
+              href: routes.contact,
             },
           ]}
         />
@@ -89,7 +93,7 @@ export default function ResumePage() {
             {education.degree} ({education.field})
           </p>
 
-          <p className="mt-2 text-sm text-[var(--muted)]">
+          <p className="mt-2 text-[15px] text-[var(--muted)]">
             {education.period} · {education.location}
           </p>
         </section>

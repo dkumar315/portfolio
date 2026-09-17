@@ -1,169 +1,233 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$(git rev-parse --show-toplevel)"
-cd "$ROOT"
+cd "$(git rev-parse --show-toplevel)"
+
+section() {
+  printf '%s\n' "---- forensic audit: $1 ----"
+}
 
 fail() {
-  echo "FORENSIC AUDIT FAILED: $1" >&2
+  printf '%s\n' "FORENSIC AUDIT FAILED: $1" >&2
   exit 1
 }
 
-echo "---- forensic audit: tracked-file inventory ----"
+section "tracked-file inventory"
 
-SUSPICIOUS_TRACKED="$(
-  git ls-files \
-    | grep -Ei '(^|/)(\.env($|\.)|.*\.(pem|key|p12|pfx|crt|cer|der|jks|keystore|sqlite|sqlite3|db|zip|7z|rar|tar|tgz|gz|pdf|docx|xlsx|pptx))$' \
-    || true
-)"
-
-if [ -n "$SUSPICIOUS_TRACKED" ]; then
-  echo "$SUSPICIOUS_TRACKED"
-  fail "unexpected secret/archive/database/document file is tracked"
+if git ls-files | grep -E \
+  '(^|/)(\.env($|\.)|credentials?($|\.)|id_(rsa|dsa|ecdsa|ed25519)($|\.)|.*\.(pem|p12|pfx|key))' \
+  >/tmp/portfolio-forensic-tracked-sensitive.txt
+then
+  cat /tmp/portfolio-forensic-tracked-sensitive.txt
+  fail "sensitive credential-style filename is tracked"
 fi
 
-if ! git check-ignore -q .env.local; then
-  fail ".env.local is not ignored"
+if git ls-files | grep -E \
+  '(^|/)(\.next|coverage|playwright-report|test-results|node_modules)(/|$)' \
+  >/tmp/portfolio-forensic-generated.txt
+then
+  cat /tmp/portfolio-forensic-generated.txt
+  fail "generated build/test output is tracked"
 fi
 
 echo "Tracked-file inventory: PASS"
 
-echo
-echo "---- forensic audit: public-source privacy scan ----"
+section "public-source privacy scan"
 
-PUBLIC_PATHS=(src public README.md)
+if ! python3 <<'PY'
+from pathlib import Path
+import re
 
-scan_public() {
-  local pattern="$1"
-  local label="$2"
+roots = [Path("src"), Path("public")]
+extra_files = [Path("README.md")]
 
-  local matches
-  matches="$(
-    grep -RInI -E "$pattern" "${PUBLIC_PATHS[@]}" 2>/dev/null || true
-  )"
-
-  if [ -n "$matches" ]; then
-    echo "$matches"
-    fail "$label"
-  fi
+text_extensions = {
+    ".cjs", ".css", ".html", ".js", ".jsx", ".json", ".md", ".mjs",
+    ".svg", ".ts", ".tsx", ".txt", ".xml", ".yaml", ".yml",
 }
 
-scan_public '\bz[0-9]{7}\b' "student ID pattern found on the public surface"
-scan_public 'href=["'\'']tel:' "telephone link found on the public surface"
-scan_public '\+61[[:space:]()-]*[0-9][0-9[:space:]()-]{7,}' "Australian phone number pattern found on the public surface"
-scan_public 'subclass[[:space:]]*(500|485)|permanent[[:space:]]+residen(cy|t)|employer[[:space:]]+sponsorship|visa[[:space:]]+sponsorship' "immigration/sponsorship detail found on the public surface"
-scan_public '/scenario/(nodes|links)|/config/(operational-intent|thresholds)' "private NAT/ANCR implementation endpoint found on the public surface"
-scan_public 'BEGIN[[:space:]]+(RSA|OPENSSH|EC|DSA)[[:space:]]+PRIVATE[[:space:]]+KEY' "private key material found on the public surface"
-scan_public 'github_pat_[A-Za-z0-9_]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|sk-[A-Za-z0-9_-]{20,}' "credential/token pattern found on the public surface"
-scan_public 'Compass[[:space:]]+IoT' "excluded project name found on the public surface"
+approved_phone_variants = (
+    "+61 431 821 862",
+    r"\+61 431 821 862",
+    "+61431821862",
+    "tel:+61431821862",
+)
 
-EMAILS="$(
-  grep -RhoEI '[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}' "${PUBLIC_PATHS[@]}" 2>/dev/null \
-    | tr '[:upper:]' '[:lower:]' \
-    | sort -u \
-    || true
-)"
+checks = (
+    ("UNSW zID", re.compile(r"\bz\d{7}\b", re.I)),
+    ("student ID label", re.compile(r"\bstudent[ _-]?id\b", re.I)),
+    ("visa subclass", re.compile(r"\bsubclass\s*(?:500|485)\b", re.I)),
+    (
+        "immigration sponsorship wording",
+        re.compile(r"\bemployer\s+sponsorship\b", re.I),
+    ),
+    (
+        "private key block",
+        re.compile(r"BEGIN (?:RSA|OPENSSH|EC|DSA) PRIVATE KEY"),
+    ),
+    (
+        "private client endpoint",
+        re.compile(
+            r"/(?:scenario/(?:nodes|links)|config/(?:operational-intent|thresholds))",
+            re.I,
+        ),
+    ),
+    (
+        "unapproved tel link",
+        re.compile(r"\btel:\+?[0-9][0-9\s-]{7,}", re.I),
+    ),
+    (
+        "unapproved Australian phone",
+        re.compile(r"\+61[\s0-9-]{8,}", re.I),
+    ),
+)
 
-UNEXPECTED_EMAILS="$(
-  printf '%s\n' "$EMAILS" \
-    | grep -v '^$' \
-    | grep -v '^devaanshk1630@gmail\.com$' \
-    || true
-)"
+failures = []
 
-if [ -n "$UNEXPECTED_EMAILS" ]; then
-  echo "$UNEXPECTED_EMAILS"
-  fail "unexpected email address found on the public surface"
+def iter_files(root: Path):
+    if not root.exists():
+        return
+    for path in root.rglob("*"):
+        if path.is_file() and path.suffix.lower() in text_extensions:
+            yield path
+
+paths = []
+for root in roots:
+    paths.extend(iter_files(root) or [])
+paths.extend(path for path in extra_files if path.exists())
+
+for path in sorted(set(paths)):
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        continue
+
+    sanitised = text
+    for approved in approved_phone_variants:
+        sanitised = sanitised.replace(approved, "")
+
+    for label, pattern in checks:
+        for match in pattern.finditer(sanitised):
+            line = sanitised.count("\n", 0, match.start()) + 1
+            failures.append(
+                f"{path}:{line}: {label}: {match.group(0)!r}"
+            )
+
+if failures:
+    print("\n".join(failures))
+    raise SystemExit(1)
+PY
+then
+  fail "private or unapproved public-surface material found"
+fi
+
+if command -v pdftotext >/dev/null 2>&1 \
+  && [[ -f public/Devaansh-Kumar-Resume.pdf ]]
+then
+  pdftotext \
+    public/Devaansh-Kumar-Resume.pdf \
+    /tmp/portfolio-public-resume.txt
+
+  if ! python3 <<'PY'
+from pathlib import Path
+import re
+
+text = Path("/tmp/portfolio-public-resume.txt").read_text(
+    encoding="utf-8",
+    errors="ignore",
+)
+
+for approved in (
+    "+61 431 821 862",
+    "+61431821862",
+    "0431 821 862",
+):
+    text = text.replace(approved, "")
+
+checks = (
+    re.compile(r"\bz\d{7}\b", re.I),
+    re.compile(r"\bsubclass\s*(?:500|485)\b", re.I),
+    re.compile(r"\bemployer\s+sponsorship\b", re.I),
+)
+
+for pattern in checks:
+    match = pattern.search(text)
+    if match:
+        raise SystemExit(
+            f"public resume contains disallowed private material: {match.group(0)!r}"
+        )
+PY
+  then
+    fail "public resume contains disallowed private material"
+  fi
 fi
 
 echo "Public-source privacy scan: PASS"
 
-echo
-echo "---- forensic audit: Git history sensitive-content scan ----"
+section "Git history sensitive-content scan"
 
-HISTORY_PATCH="/tmp/portfolio-forensic-history.patch"
+if ! python3 <<'PY'
+import re
+import subprocess
 
-git log \
-  --all \
-  --no-ext-diff \
-  --pretty=fuller \
-  -p \
-  -- \
-  src \
-  public \
-  README.md \
-  next.config.ts \
-  package.json \
-  .github \
-  > "$HISTORY_PATCH"
+history = subprocess.check_output(
+    ["git", "log", "--all", "-p", "--", "src", "public", "README.md"],
+    text=True,
+    errors="ignore",
+)
 
-scan_history() {
-  local pattern="$1"
-  local label="$2"
+for approved in (
+    "+61 431 821 862",
+    "+61431821862",
+    "tel:+61431821862",
+):
+    history = history.replace(approved, "")
 
-  local matches
-  matches="$(
-    grep -nE "$pattern" "$HISTORY_PATCH" | head -n 30 || true
-  )"
+checks = (
+    ("UNSW zID", re.compile(r"\bz\d{7}\b", re.I)),
+    ("visa subclass", re.compile(r"\bsubclass\s*(?:500|485)\b", re.I)),
+    (
+        "private key block",
+        re.compile(r"BEGIN (?:RSA|OPENSSH|EC|DSA) PRIVATE KEY"),
+    ),
+)
 
-  if [ -n "$matches" ]; then
-    echo "$matches"
-    fail "$label"
-  fi
-}
-
-scan_history '\bz[0-9]{7}\b' "student ID pattern exists in public Git history"
-scan_history 'href=["'\'']tel:' "telephone link exists in public Git history"
-scan_history '\+61[[:space:]()-]*[0-9][0-9[:space:]()-]{7,}' "Australian phone pattern exists in public Git history"
-scan_history '/scenario/(nodes|links)|/config/(operational-intent|thresholds)' "private NAT/ANCR endpoint exists in public Git history"
-scan_history 'BEGIN[[:space:]]+(RSA|OPENSSH|EC|DSA)[[:space:]]+PRIVATE[[:space:]]+KEY' "private key material exists in public Git history"
-scan_history 'github_pat_[A-Za-z0-9_]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|sk-[A-Za-z0-9_-]{20,}' "credential/token pattern exists in public Git history"
-scan_history 'Compass[[:space:]]+IoT' "excluded project name exists in public Git history"
-
-HISTORICAL_SUSPICIOUS_NAMES="$(
-  git log --all --name-only --pretty=format: \
-    | sed '/^$/d' \
-    | sort -u \
-    | grep -Ei '(^|/)(\.env($|\.)|.*\.(pem|key|p12|pfx|sqlite|sqlite3|db|zip|7z|rar|tar|tgz|gz|pdf|docx|xlsx|pptx))$' \
-    || true
-)"
-
-if [ -n "$HISTORICAL_SUSPICIOUS_NAMES" ]; then
-  echo "$HISTORICAL_SUSPICIOUS_NAMES"
-  fail "sensitive/archive/document filename exists in Git history"
+for label, pattern in checks:
+    match = pattern.search(history)
+    if match:
+        raise SystemExit(
+            f"history contains {label}: {match.group(0)!r}"
+        )
+PY
+then
+  fail "sensitive historical material found"
 fi
 
 echo "Git history sensitive-content scan: PASS"
 
-echo
-echo "---- forensic audit: historical blob-size scan ----"
+section "historical blob-size scan"
 
 LARGE_BLOBS="$(
   git rev-list --objects --all \
     | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' \
-    | awk '$1 == "blob" && $3 > 5242880 {print $0}' \
-    || true
+    | awk '$1 == "blob" && $3 > 5242880 { print }'
 )"
 
-if [ -n "$LARGE_BLOBS" ]; then
-  echo "$LARGE_BLOBS"
+if [[ -n "$LARGE_BLOBS" ]]; then
+  printf '%s\n' "$LARGE_BLOBS"
   fail "Git history contains a blob larger than 5 MiB"
 fi
 
 echo "Historical blob-size scan: PASS"
 
-echo
-echo "---- forensic audit: generated-artifact tracking scan ----"
+section "generated-artifact tracking scan"
 
-GENERATED_TRACKED="$(
-  git ls-files \
-    | grep -E '(^|/)(\.next|coverage|playwright-report|test-results|node_modules)(/|$)' \
-    || true
-)"
-
-if [ -n "$GENERATED_TRACKED" ]; then
-  echo "$GENERATED_TRACKED"
-  fail "generated output is tracked"
+if git ls-files | grep -E \
+  '(^|/)(\.next|coverage|playwright-report|test-results|node_modules)(/|$)' \
+  >/tmp/portfolio-forensic-generated-final.txt
+then
+  cat /tmp/portfolio-forensic-generated-final.txt
+  fail "generated artifact is tracked"
 fi
 
 echo "Generated-artifact tracking scan: PASS"

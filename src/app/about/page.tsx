@@ -14,7 +14,7 @@ import {
 export const metadata = createPageMetadata({
   title: "About",
   description:
-    "About Devaansh Kumar: software engineer who completed a Bachelor of Science (Computer Science) at UNSW, focused on reliable backend systems and polished full-stack software.",
+    "About Devaansh Kumar: Sydney-based software engineer who completed a Bachelor of Science (Computer Science) at UNSW, with backend and full-stack experience.",
   path: "/about",
 });
 
@@ -24,7 +24,7 @@ export default function AboutPage() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <PageIntro
           eyebrow="About"
-          title="Software engineering with breadth, evidence and attention to reliability."
+          title="I like building software I can explain, test and maintain."
           description={profile.positioning}
         />
 
@@ -34,26 +34,26 @@ export default function AboutPage() {
               How I work
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em]">
-              Build the system, understand the trade-offs.
+              Understand the system, then make it dependable.
             </h2>
           </div>
 
           <div className="space-y-5 text-base leading-7 text-[var(--muted)]">
             <p>
-              I completed Computer Science at UNSW after working across
+              I completed Computer Science at UNSW while building experience in
               production web development, backend systems, machine learning,
               networking and operating systems.
             </p>
             <p>
-              My strongest work tends to sit where implementation quality
-              matters: APIs, application state, failure handling, integration,
-              testing and the details that make software dependable rather than
-              merely demonstrable.
+              I enjoy the parts of engineering where details matter: API
+              behaviour, application state, failure handling, integration,
+              testing and getting a system to behave predictably outside the
+              happy path.
             </p>
             <p>
-              I am comfortable moving across the stack, but I am particularly
-              interested in backend and full-stack engineering where system
-              behaviour, data flow and reliability are part of the problem.
+              I can work across the stack, but I am most interested in backend
+              and full-stack roles where I can understand the data flow, own
+              implementation details and ship software people actually use.
             </p>
           </div>
         </section>
@@ -61,8 +61,8 @@ export default function AboutPage() {
         <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Skills"
-            title="Evidence-backed technical range"
-            description="Each group is connected to projects or professional work rather than presented as a self-rated proficiency score."
+            title="Technical skills with real project context"
+            description="Each skill group points to projects or professional work where I used it."
           />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
@@ -110,9 +110,9 @@ export default function AboutPage() {
             {credentials.map((credential) => (
               <article
                 key={credential.title}
-                className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5"
+                className="card-elevated rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5"
               >
-                <p className="text-xs uppercase tracking-[0.12em] text-[var(--muted)]">
+                <p className="text-[13px] uppercase tracking-[0.12em] text-[var(--muted)]">
                   {credential.issued}
                 </p>
                 <h3 className="mt-3 font-semibold">{credential.title}</h3>

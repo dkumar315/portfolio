@@ -92,10 +92,19 @@ test("site publishes working favicon, large social image and theme metadata", as
     "summary_large_image",
   );
 
-  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute(
-    "content",
-    "#f5f4ef",
-  );
+  const themeColors = page.locator('meta[name="theme-color"]');
+
+  await expect(themeColors).toHaveCount(2);
+  await expect(
+    page.locator(
+      'meta[name="theme-color"][media="(prefers-color-scheme: light)"]',
+    ),
+  ).toHaveAttribute("content", "#f5f4ef");
+  await expect(
+    page.locator(
+      'meta[name="theme-color"][media="(prefers-color-scheme: dark)"]',
+    ),
+  ).toHaveAttribute("content", "#0f1311");
 });
 
 test("unknown routes return a useful accessible 404", async ({ page }) => {

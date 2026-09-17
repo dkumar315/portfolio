@@ -24,6 +24,8 @@ describe("public evidence boundaries", () => {
 
     expect(publicProjectCopy).not.toContain("demand-loaded memory mappings");
     expect(publicProjectCopy).not.toContain("morality mechanic");
+    expect(publicProjectCopy).not.toContain("morality system");
+    expect(publicProjectCopy).not.toContain("mmap");
     expect(publicProjectCopy).not.toContain("boss behaviour");
     expect(publicProjectCopy).not.toContain("multiple game-over states");
 

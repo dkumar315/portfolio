@@ -16,6 +16,7 @@ export interface Experience {
   period: string;
   category: ExperienceCategory;
   isCurrent: boolean;
+  organisationSummary?: string;
   summary: string;
   highlights: readonly string[];
   stack?: readonly string[];

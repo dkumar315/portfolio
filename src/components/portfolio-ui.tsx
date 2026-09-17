@@ -4,15 +4,16 @@ import Link from "next/link";
 import type { Experience, Project, SkillGroup } from "@/content/types";
 
 const primaryButton =
-  "inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--foreground)] px-5 py-2.5 text-sm font-semibold text-[var(--background)] transition hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]";
+  "inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--button-background)] px-5 py-2.5 text-sm font-semibold text-[var(--button-foreground)] transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]";
 
 const secondaryButton =
-  "inline-flex min-h-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2.5 text-sm font-semibold transition hover:border-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]";
+  "inline-flex min-h-11 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--surface-strong)] px-5 py-2.5 text-sm font-semibold transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]";
 
 interface IntroAction {
   label: string;
   href: string;
   external?: boolean;
+  download?: boolean;
   primary?: boolean;
 }
 
@@ -47,6 +48,22 @@ export function PageIntro({
         <div className="mt-8 flex flex-wrap gap-3">
           {actions.map((action) => {
             const className = action.primary ? primaryButton : secondaryButton;
+
+            if (action.download) {
+              return (
+                <a
+                  key={action.href}
+                  href={action.href}
+                  download
+                  className={className}
+                >
+                  {action.label}
+                  <span aria-hidden="true" className="ml-2">
+                    ↓
+                  </span>
+                </a>
+              );
+            }
 
             return action.external ? (
               <a
@@ -112,7 +129,7 @@ export function SectionHeading({
       {href && linkLabel ? (
         <Link
           href={href}
-          className="w-fit text-sm font-semibold underline decoration-[var(--border)] underline-offset-4 transition hover:decoration-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+          className="w-fit text-[15px] font-semibold underline decoration-[var(--border-strong)] underline-offset-4 transition hover:decoration-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
         >
           {linkLabel} →
         </Link>
@@ -129,8 +146,8 @@ const projectKindLabels: Record<Project["kind"], string> = {
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 transition duration-200 hover:-translate-y-0.5 hover:border-[var(--foreground)]">
-      <div className="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-[var(--muted)]">
+    <article className="card-elevated flex h-full flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 transition duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:bg-[var(--surface-strong)]">
+      <div className="flex flex-wrap items-center gap-2 font-mono text-[13px] uppercase tracking-[0.12em] text-[var(--muted)]">
         <span>{projectKindLabels[project.kind]}</span>
         <span aria-hidden="true">·</span>
         <span>{project.period}</span>
@@ -207,7 +224,7 @@ export function RuptureLabFeature({
   imageAlt,
 }: RuptureLabFeatureProps) {
   return (
-    <article className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--surface)]">
+    <article className="card-elevated overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--surface)]">
       <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
         <div className="flex flex-col p-7 sm:p-8 lg:p-10">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-strong)]">
@@ -247,7 +264,7 @@ export function RuptureLabFeature({
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href={project.caseStudyHref!}
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--foreground)] px-5 py-2.5 text-sm font-semibold text-[var(--background)] transition hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+              className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--button-background)] px-5 py-2.5 text-sm font-semibold text-[var(--button-foreground)] transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
             >
               Read case study
               <span aria-hidden="true" className="ml-2">
@@ -259,7 +276,7 @@ export function RuptureLabFeature({
               href={project.repoUrl!}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2.5 text-sm font-semibold transition hover:border-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--surface-strong)] px-5 py-2.5 text-sm font-semibold transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
             >
               View repository
               <span aria-hidden="true" className="ml-2">
@@ -269,7 +286,7 @@ export function RuptureLabFeature({
           </div>
         </div>
 
-        <figure className="flex items-center border-t border-[var(--border)] bg-[var(--foreground)] p-3 lg:border-l lg:border-t-0">
+        <figure className="flex items-center border-t border-[var(--border)] bg-[var(--media-frame)] p-3 lg:border-l lg:border-t-0">
           <Image
             src={imageSrc}
             alt={imageAlt}
@@ -288,10 +305,10 @@ export function ExperienceCard({ experience }: { experience: Experience }) {
   return (
     <article className="grid gap-6 border-b border-[var(--border)] py-8 first:pt-0 last:border-b-0 md:grid-cols-[12rem_1fr]">
       <div>
-        <p className="font-mono text-xs uppercase tracking-[0.12em] text-[var(--muted)]">
+        <p className="font-mono text-[13px] uppercase tracking-[0.12em] text-[var(--muted)]">
           {experience.period}
         </p>
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        <p className="mt-2 text-[15px] text-[var(--muted)]">
           {experience.location}
         </p>
       </div>
@@ -302,6 +319,12 @@ export function ExperienceCard({ experience }: { experience: Experience }) {
         </h3>
 
         <p className="mt-1 font-medium">{experience.organisation}</p>
+
+        {experience.organisationSummary ? (
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--muted)]">
+            {experience.organisationSummary}
+          </p>
+        ) : null}
 
         <p className="mt-4 max-w-3xl leading-7 text-[var(--muted)]">
           {experience.summary}
@@ -337,7 +360,7 @@ export function ExperienceCard({ experience }: { experience: Experience }) {
 
 export function SkillGroupCard({ group }: { group: SkillGroup }) {
   return (
-    <article className="h-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
+    <article className="card-elevated h-full rounded-2xl border border-[var(--border)] border-t-2 border-t-[var(--accent)] bg-[var(--surface)] p-5">
       <h3 className="text-base font-semibold">{group.title}</h3>
 
       <div className="mt-4 flex flex-wrap gap-2">

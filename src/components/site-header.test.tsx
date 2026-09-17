@@ -1,16 +1,21 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+}));
 
 import { primaryNavigation } from "@/content/portfolio";
 
 import { SiteHeader } from "./site-header";
 
 describe("SiteHeader", () => {
-  it("shows the portfolio identity", () => {
+  it("shows the portfolio identity, Sydney and an explicit Home route", () => {
     render(<SiteHeader />);
 
     expect(screen.getByText("Devaansh Kumar")).toBeVisible();
-    expect(screen.getByText("Software Engineer")).toBeVisible();
+    expect(screen.getByText("Software Engineer · Sydney")).toBeVisible();
+    expect(screen.getAllByRole("link", { name: "Home" })).toHaveLength(2);
   });
 
   it("contains desktop and responsive copies of the primary navigation", () => {
@@ -27,7 +32,7 @@ describe("SiteHeader", () => {
     }
   });
 
-  it("links to external engineering profiles", () => {
+  it("links external profiles and exposes the theme toggle", () => {
     render(<SiteHeader />);
 
     expect(screen.getAllByRole("link", { name: /GitHub/ })[0]).toHaveAttribute(
@@ -41,5 +46,11 @@ describe("SiteHeader", () => {
       "href",
       "https://www.linkedin.com/in/devaansh-kumar-31510cse/",
     );
+
+    expect(
+      screen.getByRole("button", {
+        name: "Toggle light and dark mode",
+      }),
+    ).toBeVisible();
   });
 });

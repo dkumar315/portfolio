@@ -45,15 +45,15 @@ export default function ProjectsPage() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <PageIntro
           eyebrow="Projects"
-          title="Selected work across full-stack, ML, systems and networking."
-          description="A curated set of projects chosen for engineering depth, breadth and the quality of the work behind them."
+          title="Selected software engineering projects."
+          description="Independent, industry and university work across backend and full-stack development, systems, networking, computer vision and machine learning."
         />
 
         <section className="py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Flagship"
-            title="Independent resilience engineering"
-            description="The strongest independently owned project in the portfolio: a released API resilience workbench spanning backend services, real-time monitoring, persistence, testing and deployment."
+            title="RuptureLab — API resilience from proxy to dashboard"
+            description="An independently owned full-stack project for running controlled API failure and recovery experiments, with live monitoring, persistence, testing and deployment."
           />
 
           <RuptureLabFeature
@@ -62,7 +62,7 @@ export default function ProjectsPage() {
             imageAlt="RuptureLab experiment overview dashboard"
           />
 
-          <figure className="mt-5 overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--foreground)] p-3">
+          <figure className="mt-5 overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--media-frame)] p-3">
             <Image
               src="/projects/rupturelab/live-experiment.png"
               alt="RuptureLab live experiment monitoring dashboard"
@@ -77,8 +77,8 @@ export default function ProjectsPage() {
         <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Industry client capstone"
-            title="Industry-client network resilience"
-            description="A major five-person engineering project combining simulation, backend services, frontend integration and network-resilience workflows."
+            title="Network resilience for an industry client"
+            description="A five-person engineering project that brought simulation, backend services, frontend workflows and network-resilience tooling into one demonstrator."
           />
 
           <div className="max-w-4xl">

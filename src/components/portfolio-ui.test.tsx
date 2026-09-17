@@ -26,6 +26,11 @@ describe("portfolio UI", () => {
             primary: true,
           },
           {
+            label: "Download",
+            href: "/resume.pdf",
+            download: true,
+          },
+          {
             label: "External",
             href: "https://example.com",
             external: true,
@@ -39,6 +44,10 @@ describe("portfolio UI", () => {
     expect(screen.getByRole("link", { name: /Internal/ })).toHaveAttribute(
       "href",
       "/projects",
+    );
+
+    expect(screen.getByRole("link", { name: /Download/ })).toHaveAttribute(
+      "download",
     );
 
     expect(screen.getByRole("link", { name: /External/ })).toHaveAttribute(
@@ -171,6 +180,7 @@ describe("portfolio UI", () => {
     const { rerender } = render(<ExperienceCard experience={engineering!} />);
 
     expect(screen.getByText("FastAPI")).toBeVisible();
+    expect(screen.getByText(/Australian engineering company/)).toBeVisible();
 
     rerender(<ExperienceCard experience={leadership!} />);
 

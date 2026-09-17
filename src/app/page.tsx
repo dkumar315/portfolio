@@ -31,19 +31,47 @@ const supportingProjects = projects.filter((project) =>
   ),
 );
 
+const snapshotItems = [
+  {
+    label: "Professional engineering",
+    value: "ArmsOA · Tandem Learning",
+    href: routes.experience,
+  },
+  {
+    label: "Independent release",
+    value: "RuptureLab v1.0.0",
+    href: routes.ruptureLab,
+  },
+  {
+    label: "Industry capstone",
+    value: "Network Analytic Tool · 94/100",
+    href: routes.nat,
+  },
+  {
+    label: "Core stack",
+    value: "Python · FastAPI · TypeScript · React",
+    href: "#skills",
+  },
+] as const;
+
 export default function Home() {
   return (
     <main id="main-content" tabIndex={-1}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <PageIntro
-          eyebrow="Software Engineer · UNSW Computer Science"
-          title="Backend-minded. Full-stack capable. Focused on software that holds up."
+          eyebrow="Software Engineer · Sydney, Australia"
+          title="Backend-focused software engineer who ships across the stack."
           description={profile.introduction}
           actions={[
             {
               label: "View projects",
               href: routes.projects,
               primary: true,
+            },
+            {
+              label: "Download resume",
+              href: profile.resumeHref,
+              download: true,
             },
             {
               label: "Contact me",
@@ -56,23 +84,27 @@ export default function Home() {
           aria-label="Engineering snapshot"
           className="grid border-b border-[var(--border)] sm:grid-cols-2 lg:grid-cols-4"
         >
-          {[
-            ["Professional engineering", "ArmsOA + Tandem Learning"],
-            ["Independent release", "RuptureLab v1.0.0"],
-            ["Industry capstone", "94 HD · COMP3900"],
-            ["Core stack", "Python · FastAPI · TypeScript · React"],
-          ].map(([label, value]) => (
-            <div
-              key={label}
-              className="flex min-h-28 flex-col justify-center border-b border-[var(--border)] px-5 py-5 sm:px-6 sm:odd:border-r lg:border-b-0 lg:border-r lg:px-7 lg:last:border-r-0"
+          {snapshotItems.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="group flex min-h-28 flex-col justify-center border-b border-[var(--border)] px-5 py-5 transition-colors hover:bg-[var(--accent-soft)] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--accent)] sm:px-6 sm:odd:border-r lg:border-b-0 lg:border-r lg:px-7 lg:last:border-r-0"
             >
-              <p className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--muted)]">
-                {label}
+              <p className="text-[13px] font-medium uppercase tracking-[0.12em] text-[var(--muted)]">
+                {item.label}
               </p>
-              <p className="mt-2 max-w-[15rem] text-sm font-semibold leading-6">
-                {value}
-              </p>
-            </div>
+              <div className="mt-2 flex items-end justify-between gap-4">
+                <p className="max-w-[15rem] text-sm font-semibold leading-6">
+                  {item.value}
+                </p>
+                <span
+                  aria-hidden="true"
+                  className="shrink-0 text-[var(--accent-strong)] transition-transform group-hover:translate-x-0.5"
+                >
+                  →
+                </span>
+              </div>
+            </Link>
           ))}
         </section>
 
@@ -80,7 +112,7 @@ export default function Home() {
           <SectionHeading
             eyebrow="Professional engineering"
             title="Production software experience"
-            description="Software engineering work across an industry-client demonstrator and a live education product."
+            description="Paid engineering work across a network-resilience demonstrator and a live education platform."
             href={routes.experience}
             linkLabel="Full experience"
           />
@@ -95,8 +127,8 @@ export default function Home() {
         <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Flagship project"
-            title="Independent resilience engineering"
-            description="An independently owned, released full-stack resilience workbench with backend, data, real-time monitoring and production-style quality concerns."
+            title="RuptureLab: resilience testing from proxy to dashboard"
+            description="My independent full-stack project for controlled API failure and recovery experiments, with live monitoring, persistence and production-style testing."
             href={routes.projects}
             linkLabel="All projects"
           />
@@ -111,8 +143,8 @@ export default function Home() {
         <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
           <SectionHeading
             eyebrow="Selected work"
-            title="Technical work across systems, ML and networking"
-            description="A smaller selection of projects that complements the flagship with industry, machine-learning and systems experience."
+            title="Systems, ML and networking projects"
+            description="A smaller set of projects that shows the range behind my full-stack work."
           />
 
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -122,11 +154,14 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-[var(--border)] py-14 sm:py-16 lg:py-20">
+        <section
+          id="skills"
+          className="scroll-mt-28 border-t border-[var(--border)] py-14 sm:py-16 lg:py-20"
+        >
           <SectionHeading
             eyebrow="Technical range"
-            title="Skills backed by real work"
-            description="Each group is tied to projects or professional engineering experience."
+            title="Technical skills with project evidence"
+            description="Each skill group points back to projects or professional work where I used it."
           />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
@@ -141,7 +176,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mb-16 rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-7 sm:mb-20 sm:p-10">
+        <section className="card-elevated mb-16 rounded-3xl border border-[var(--border-strong)] bg-[var(--accent-soft)] p-7 sm:mb-20 sm:p-10">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-strong)]">
             Get in touch
           </p>
@@ -149,19 +184,19 @@ export default function Home() {
           <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <h2 className="max-w-3xl text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
-                Looking for a graduate or junior engineer across backend and
-                full-stack work?
+                Looking for a graduate or junior software engineer?
               </h2>
 
               <p className="mt-4 max-w-2xl leading-7 text-[var(--muted)]">
-                I am interested in software engineering roles where strong
-                implementation, testing and product judgement matter.
+                I am based in Sydney and interested in backend and full-stack
+                roles where implementation, testing and product judgement
+                matter.
               </p>
             </div>
 
             <Link
               href={routes.contact}
-              className="inline-flex min-h-11 w-fit items-center justify-center rounded-full bg-[var(--foreground)] px-5 py-2.5 text-sm font-semibold text-[var(--background)] transition hover:opacity-85"
+              className="inline-flex min-h-11 w-fit items-center justify-center rounded-full bg-[var(--button-background)] px-5 py-2.5 text-sm font-semibold text-[var(--button-foreground)] transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
             >
               Get in touch →
             </Link>

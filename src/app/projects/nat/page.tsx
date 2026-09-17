@@ -30,26 +30,25 @@ export default function NatCaseStudyPage() {
           project={project}
           eyebrow="Industry-client capstone"
           title="Integrating simulation, monitoring and recovery for a network-resilience demonstrator."
-          summary="A five-person UNSW engineering project that combined network simulation, operational monitoring, resilient communications planning, terrain-aware RF analysis and recovery workflows into one Dockerised demonstrator."
+          summary="A five-person UNSW engineering project combining network simulation, operational monitoring, resilient communications planning, terrain-aware RF analysis and recovery workflows in one Dockerised demonstrator."
           sourceLabel="Private project source · public-safe case study"
         />
 
         <CaseStudySection
           eyebrow="Context"
-          title="Turn several technical capabilities into one coherent operator workflow."
+          title="Bring several technical systems into one operator workflow."
         >
           <p>
-            The challenge was broader than implementing an isolated algorithm.
-            The team needed a demonstrator where scenario configuration,
-            simulated network behaviour, degradation, monitoring and recovery
-            workflows shared consistent data and could be explained clearly to
-            an industry client.
+            The challenge was integration, not one isolated algorithm. Scenario
+            configuration, simulated network behaviour, degradation, monitoring
+            and recovery all needed to share consistent data and make sense as
+            one demonstrator.
           </p>
           <p>
-            My formal team responsibilities were Scrum Master, Systems Architect
-            and DevOps, alongside full-stack integration work. I worked across
-            backend services, shared API contracts, frontend workflows,
-            demonstrations, QA and handover.
+            I held the Scrum Master, Systems Architect and DevOps roles and also
+            contributed to full-stack integration. I integrated backend
+            services, shared API contracts and frontend workflows, and
+            coordinated demonstrations, QA and handover.
           </p>
         </CaseStudySection>
 
@@ -57,8 +56,8 @@ export default function NatCaseStudyPage() {
           <CaseStudyProofGrid
             items={[
               {
-                value: "94 HD",
-                label: "COMP3900 result",
+                value: "94/100",
+                label: "High Distinction",
                 detail:
                   "The five-person industry-client capstone received a High Distinction.",
               },
@@ -86,7 +85,7 @@ export default function NatCaseStudyPage() {
 
         <CaseStudySection
           eyebrow="System shape"
-          title="Keep the operator flow understandable from configuration to recovery."
+          title="Keep the flow clear from configuration to recovery."
         >
           <CaseStudyFlow
             steps={[
@@ -119,28 +118,27 @@ export default function NatCaseStudyPage() {
           />
 
           <p>
-            The architectural focus was integration: backend services and the
-            React interface needed shared contracts, predictable state and
-            boundaries that kept simulation separate from operator-facing
-            decision support.
+            Backend services and the React interface needed shared contracts and
+            predictable state, while the simulator stayed separate from
+            operator-facing decision support.
           </p>
         </CaseStudySection>
 
         <CaseStudySection
           eyebrow="Contribution"
-          title="My work sat at the integration boundaries."
+          title="I focused on architecture, integration and delivery."
         >
           <CaseStudyDecisionGrid
             items={[
               {
                 title: "Architecture and API contracts",
                 detail:
-                  "Helped shape how backend capabilities, configuration and frontend workflows fit together so the demonstrator behaved as one system rather than disconnected prototypes.",
+                  "Designed shared API and configuration boundaries so backend services and frontend workflows behaved as one demonstrator.",
               },
               {
                 title: "Full-stack implementation",
                 detail:
-                  "Worked across Python/FastAPI services and React/TypeScript interfaces covering monitoring, RF/network degradation and recovery-oriented workflows.",
+                  "Integrated Python/FastAPI services with React/TypeScript interfaces for monitoring, RF/network degradation and recovery workflows.",
               },
               {
                 title: "Delivery and DevOps",
@@ -150,7 +148,7 @@ export default function NatCaseStudyPage() {
               {
                 title: "Handover quality",
                 detail:
-                  "Helped consolidate the final demonstrator and preserve clear boundaries between simulation, deterministic tooling and any external decision layer.",
+                  "Consolidated the final demonstrator while keeping simulation and deterministic operator tooling separate from any external decision layer.",
               },
             ]}
           />
@@ -158,18 +156,17 @@ export default function NatCaseStudyPage() {
 
         <CaseStudySection
           eyebrow="Trade-offs"
-          title="A demonstrator still needs disciplined boundaries."
+          title="Keep the system inspectable."
         >
           <p>
-            The useful engineering trade-off was not to hide complexity behind
-            opaque automation. Network state, degradation and recovery behaviour
-            remained inspectable, while deterministic operator tooling stayed
-            separate from simulation.
+            We avoided hiding network behaviour behind opaque automation.
+            Configuration, degradation and recovery stayed visible, while
+            deterministic operator tooling remained separate from simulation.
           </p>
           <p>
-            That made the product easier to test and explain: a user could see
-            how configuration affected the simulated network, how stressors
-            changed operational state and what recovery workflow followed.
+            That made the demonstrator easier to test and explain: users could
+            follow how configuration changed the simulated network, how
+            stressors affected state and what recovery workflow followed.
           </p>
 
           <CaseStudyNote title="Client confidentiality">
@@ -185,13 +182,12 @@ export default function NatCaseStudyPage() {
 
         <CaseStudySection
           eyebrow="Outcome"
-          title="The project became professional engineering experience."
+          title="The project led directly to paid engineering work."
         >
           <p>
-            The capstone finished with a 94 HD and led to a paid follow-on
-            Software Engineer engagement. That continuation is useful evidence
-            that the work held up beyond assessment: the demonstrator still had
-            engineering value after the university project ended.
+            The capstone received 94/100 (High Distinction) and led to a paid
+            Software Engineer engagement. The follow-on work continued the
+            demonstrator beyond the university assessment.
           </p>
         </CaseStudySection>
 

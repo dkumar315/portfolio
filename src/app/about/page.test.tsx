@@ -10,7 +10,7 @@ describe("AboutPage", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /Software engineering with breadth/,
+        name: /I like building software I can explain/,
       }),
     ).toBeVisible();
 

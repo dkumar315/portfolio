@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  education,
   experiences,
   homepageExperienceSlugs,
   homepageProjectSlugs,
@@ -15,7 +16,7 @@ function expectUnique(values: readonly string[]) {
 
 describe("portfolio content model", () => {
   it("keeps primary navigation compact, internal and unique", () => {
-    expect(primaryNavigation).toHaveLength(5);
+    expect(primaryNavigation).toHaveLength(6);
     expectUnique(primaryNavigation.map((item) => item.href));
     expectUnique(primaryNavigation.map((item) => item.label));
 
@@ -24,10 +25,11 @@ describe("portfolio content model", () => {
     }
 
     expect(primaryNavigation.map((item) => item.href)).toEqual([
+      routes.home,
       routes.experience,
       routes.projects,
-      routes.about,
       routes.resume,
+      routes.about,
       routes.contact,
     ]);
   });
@@ -95,5 +97,11 @@ describe("portfolio content model", () => {
         .filter((project) => project.caseStudyHref)
         .map((project) => project.slug),
     ).toEqual(["rupturelab", "nat", "wheat-segmentation", "xrfm"]);
+  });
+  it("keeps the education timeline concise", () => {
+    expect(education.period).toBe("Sep 2023 – Sep 2026");
+    expect(education.highlights.join(" ")).not.toMatch(/conferral/i);
+    expect(education.highlights.join(" ")).not.toContain("4 September 2026");
+    expect(education.highlights.join(" ")).not.toContain("30 September 2026");
   });
 });
